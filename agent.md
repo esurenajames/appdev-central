@@ -3,10 +3,10 @@
 ## 🎨 Color Theme
 Use these CSS variables or Tailwind classes for all UI elements:
 
-- **Primary**: `#04151f` (`--primary`, `bg-primary`, `text-primary`)
-- **Accent 1**: `#183A37` (`--accent-1`, `bg-accent-1`, `text-accent-1`)
-- **Accent 2**: `#C44900` (`--accent-2`, `bg-accent-2`, `text-accent-2`)
-- **Neutral**: `#FFFFFF` (`--neutral`, `bg-neutral`, `text-neutral`)
+- **Primary**: `#0F2A44` (`--primary`, `bg-primary`, `text-primary`)
+- **Accent 1**: `#1677ff` (`--accent-1`, `bg-accent-1`, `text-accent-1`)
+- **Accent 2**: `#FF8A3D` (`--accent-2`, `bg-accent-2`, `text-accent-2`)
+- **Neutral**: `#F8FAFC` (`--neutral`, `bg-neutral`, `text-neutral`)
 
 ## 📁 Directory Structure Rules
 Maintain the following structure for all new files and refactors:
@@ -38,3 +38,4 @@ Maintain the following structure for all new files and refactors:
 2. **Components**: Prioritize creating reusable components in `components/ui/`.
 3. **Logic**: Keep business logic in `services/`, not in the components.
 4. **Naming**: Use PascalCase for components and camelCase for hooks/utils.
+5. **Forms**: Always use `Form` and `Input` from `antd` for forms and handle their validation rules.

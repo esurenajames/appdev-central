@@ -4,10 +4,10 @@
   --background: #FFFFFF;
   --foreground: #04151f;
 
-  --primary: #04151f;
-  --accent-1: #183A37;
-  --accent-2: #C44900;
-  --neutral: #FFFFFF;
+  --primary: #0F2A44;
+  --accent-1: #1677ff;
+  --accent-2: #FF8A3D;
+  --neutral: #F8FAFC;
 }
 
 @theme inline {
@@ -32,4 +32,9 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.ant-btn {
+  padding: 8px 20px !important;
+  height: auto !important;
 }
