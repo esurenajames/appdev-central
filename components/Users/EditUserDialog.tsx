@@ -3,13 +3,13 @@
 import React, { useEffect } from 'react';
 import { Modal, Form, Input, Select, Switch } from 'antd';
 
-import { UserData } from '@/types/user';
+import { Users } from '@/interface/user';
 
 interface EditUserDialogProps {
     visible: boolean;
     onCancel: () => void;
     onSave: (values: any) => void;
-    user: UserData | null;
+    user: Users | null;
     isEditing: boolean;
 }
 

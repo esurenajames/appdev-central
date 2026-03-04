@@ -5,10 +5,10 @@ import { Table, Avatar } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { UserOutlined } from '@ant-design/icons';
 import StatusChip from '@/components/Table/StatusChip';
-import { UserData } from '@/types/user';
+import { Users } from '@/interface/user';
 import ViewUserDialog from '@/components/Users/ViewUserDialog';
 
-const mockNewUsers: UserData[] = Array.from({ length: 10 }).map((_, i) => ({
+const mockNewUsers: Users[] = Array.from({ length: 10 }).map((_, i) => ({
     key: (i + 1).toString(),
     accountId: `ACC-0${(i + 1).toString().padStart(2, '0')}`,
     name: ['Florence Shaw', 'Amélie Laurent', 'Ammar Foley', 'Caitlyn King', 'Sienna Hewitt', 'Olly Shroeder'][i % 6],
@@ -21,15 +21,15 @@ const mockNewUsers: UserData[] = Array.from({ length: 10 }).map((_, i) => ({
 }));
 
 export default function NewestUsersTable() {
-    const [selectedUser, setSelectedUser] = useState<UserData | null>(null);
+    const [selectedUser, setSelectedUser] = useState<Users | null>(null);
     const [isViewModalVisible, setIsViewModalVisible] = useState(false);
 
-    const handleViewUser = (user: UserData) => {
+    const handleViewUser = (user: Users) => {
         setSelectedUser(user);
         setIsViewModalVisible(true);
     };
 
-    const columns: ColumnsType<UserData> = [
+    const columns: ColumnsType<Users> = [
         {
             title: 'Account ID',
             dataIndex: 'accountId',

@@ -9,7 +9,7 @@ export default function UserManagementPage() {
             <div className="mb-8">
                 <h1 className="text-[32px] font-bold text-gray-900 tracking-tight">User management</h1>
                 <p className="text-gray-500 mt-1 text-base">
-                    Manage your team members and their account permissions here.
+                    Manage users access and their account permissions here.
                 </p>
             </div>
 

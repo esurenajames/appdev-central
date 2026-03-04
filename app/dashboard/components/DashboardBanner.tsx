@@ -7,7 +7,6 @@ import { ChevronRight } from 'lucide-react';
 export default function DashboardBanner() {
     return (
         <div className="relative overflow-hidden bg-accent-1 rounded-[24px] p-8 md:p-12 mb-10 shadow-lg">
-            {/* Decorative background stars */}
             <div className="absolute inset-0 pointer-events-none">
                 <svg className="absolute right-[5%] top-[15%] w-24 h-24 text-white/30" viewBox="0 0 100 100" fill="currentColor">
                     <path d="M50 0 C50 30 70 50 100 50 C70 50 50 70 50 100 C50 70 30 50 0 50 C30 50 50 30 50 0Z" />
@@ -29,7 +28,7 @@ export default function DashboardBanner() {
                 </h1>
 
                 <Link href="/dashboard/users" className="block w-max">
-                    <button className="bg-white text-black p-1.5 pr-2 rounded-[32px] flex items-center gap-3 transition-all hover:bg-gray-100 hover:scale-[1.02] active:scale-[0.98] shadow-xl w-max group">
+                    <button className="bg-white text-black p-1.5 pr-2 rounded-[32px] flex items-center gap-3 transition-all shadow-xl w-max group">
                         <span className="font-semibold text-[15px] pl-5">Manage Users & Permissions</span>
                         <div className="bg-black text-white w-8 h-8 rounded-full flex items-center justify-center transition-transform group-hover:translate-x-0.5">
                             <ChevronRight strokeWidth={3} className="w-4 h-4" />

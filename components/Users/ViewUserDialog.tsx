@@ -4,12 +4,12 @@ import React from 'react';
 import { Modal, Descriptions, Avatar, Tag } from 'antd';
 import StatusChip from '@/components/Table/StatusChip';
 
-import { UserData } from '@/types/user';
+import { Users } from '@/interface/user';
 
 interface ViewUserDialogProps {
     visible: boolean;
     onClose: () => void;
-    user: UserData | null;
+    user: Users | null;
 }
 
 export default function ViewUserDialog({ visible, onClose, user }: ViewUserDialogProps) {
