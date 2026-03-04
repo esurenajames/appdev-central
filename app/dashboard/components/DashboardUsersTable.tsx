@@ -71,7 +71,7 @@ export default function NewestUsersTable() {
     ];
 
     return (
-        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden overflow-x-auto">
             <div className="px-6 py-5 border-b border-gray-100">
                 <h3 className="text-lg font-bold text-gray-900 tracking-tight">Newest Users</h3>
                 <p className="text-sm text-gray-500 mt-1">Overview of the last 10 users joined</p>

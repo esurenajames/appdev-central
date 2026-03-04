@@ -30,7 +30,6 @@ Maintain the following structure for all new files and refactors:
 ├── types/            # TS definitions
 ├── styles/           # Global styles
 ├── public/           # Static assets
-└── tests/            # Component & Integration tests
 ```
 
 ## 🛠️ Implementation Guidelines
