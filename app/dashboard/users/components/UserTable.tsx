@@ -189,7 +189,7 @@ export default function UserTable() {
 
     return (
         <div className="relative">
-            <div className="bg-white p-4 rounded-2xl border border-gray-100 shadow-xl overflow-hidden">
+            <div className="bg-white p-4 rounded-2xl border border-gray-100 shadow-xl overflow-x-auto">
                 <div className="p-6 border-b border-gray-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="flex items-center gap-2">
                         <h2 className="text-lg font-bold text-gray-900">All users</h2>

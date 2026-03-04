@@ -1,9 +1,9 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Users, Settings, MoreVertical } from 'lucide-react';
+import { Home, Users, Settings, MoreVertical, Menu, X } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -13,6 +13,7 @@ function cn(...inputs: ClassValue[]) {
 
 export default function Sidebar() {
     const pathname = usePathname();
+    const [isOpen, setIsOpen] = useState(false);
 
     const menuGroups = [
         {
@@ -33,10 +34,10 @@ export default function Sidebar() {
         }
     ];
 
-    return (
-        <div className="w-64 flex flex-col h-screen bg-white border-r border-gray-200 sticky top-0">
+    const sidebarContent = (
+        <div className="flex flex-col h-full bg-white">
             {/* Logo */}
-            <div className="p-6">
+            <div className="p-6 flex items-center justify-between">
                 <Link href="/" className="flex items-center gap-2 group w-max">
                     <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-sm">
                         <span className="text-white font-bold text-xs">AC</span>
@@ -45,6 +46,12 @@ export default function Sidebar() {
                         AppDev Central
                     </span>
                 </Link>
+                <button
+                    onClick={() => setIsOpen(false)}
+                    className="lg:hidden text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                    <X size={20} />
+                </button>
             </div>
 
             {/* Menu */}
@@ -63,6 +70,7 @@ export default function Sidebar() {
                                         <Link
                                             key={item.href}
                                             href={item.href}
+                                            onClick={() => setIsOpen(false)}
                                             className={cn(
                                                 "flex items-center gap-3 px-3 py-2.5 rounded-lg text-[14px] font-semibold transition-colors",
                                                 isActive
@@ -84,6 +92,7 @@ export default function Sidebar() {
             <div className="p-5 flex flex-col gap-4">
                 <Link
                     href="/dashboard/settings"
+                    onClick={() => setIsOpen(false)}
                     className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[14px] font-semibold text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
                 >
                     <Settings className="w-[18px] h-[18px] text-gray-500" />
@@ -95,14 +104,56 @@ export default function Sidebar() {
                         <div className="w-9 h-9 rounded-full bg-accent-1 text-white flex items-center justify-center font-bold text-sm shadow-sm group-hover:scale-105 transition-transform">
                             A
                         </div>
-                        <div className="flex flex-col">
+                        <div className="flex flex-col text-left">
                             <span className="text-[14px] font-semibold text-gray-900">Admin User</span>
-                            <span className="text-[12px] text-gray-500">admin@appdev.com</span>
+                            <span className="text-[12px] text-gray-500 whitespace-nowrap">admin@appdev.com</span>
                         </div>
                     </div>
-                    <MoreVertical className="w-5 h-5 text-gray-400 group-hover:text-gray-700 transition-colors" />
+                    <MoreVertical className="w-5 h-5 text-gray-400 group-hover:text-gray-700 transition-colors flex-shrink-0" />
                 </div>
             </div>
         </div>
+    );
+
+    return (
+        <>
+            <header className="lg:hidden sticky top-0 left-0 w-full z-40 bg-white/80 backdrop-blur-md border-b border-gray-200 px-4 h-16 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                    <button
+                        onClick={() => setIsOpen(true)}
+                        className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                    >
+                        <Menu size={24} />
+                    </button>
+                    <Link href="/" className="flex items-center gap-2">
+                        <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-sm">
+                            <span className="text-white font-bold text-xs">AC</span>
+                        </div>
+                        <span className="text-lg font-bold text-gray-900 tracking-tight">AppDev Central</span>
+                    </Link>
+                </div>
+            </header>
+
+            {/* Mobile Sidebar Overlay */}
+            <div
+                className={cn(
+                    "fixed inset-0 z-[60] transform transition-transform duration-300 ease-in-out lg:hidden",
+                    isOpen ? "translate-x-0" : "-translate-x-full"
+                )}
+            >
+                <div
+                    className="absolute inset-0 bg-black/20 backdrop-blur-sm"
+                    onClick={() => setIsOpen(false)}
+                ></div>
+                <div className="absolute left-0 top-0 h-full w-[280px] bg-white shadow-2xl overflow-hidden">
+                    {sidebarContent}
+                </div>
+            </div>
+
+
+            <aside className="hidden lg:flex w-64 flex-col h-screen border-r border-gray-200 sticky top-0 bg-white">
+                {sidebarContent}
+            </aside>
+        </>
     );
 }

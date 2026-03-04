@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Button } from 'antd';
@@ -16,6 +16,15 @@ const Navbar: React.FC = () => {
     const pathname = usePathname();
     const [isModulesOpen, setIsModulesOpen] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 50);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     if (pathname !== '/' && pathname !== '/landing') {
         return null;
@@ -30,14 +39,24 @@ const Navbar: React.FC = () => {
         },
     ];
 
-    return (
-        <nav className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-gray-200">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex h-16 items-center justify-between">
+    const isActive = (path: string) => pathname === path ? "text-primary font-bold" : "text-gray-600 hover:text-primary transition-colors";
 
+    return (
+        <>
+            <nav
+                className={cn(
+                    "fixed top-0 left-0 w-full z-50 transition-all duration-500 border-b",
+                    isScrolled
+                        ? "bg-white/90 backdrop-blur-md border-gray-200 py-2 shadow-sm"
+                        : "bg-white border-transparent py-4"
+                )}
+            >
+                <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+
+                    {/* Left: Logo & Brand */}
                     <div className="flex items-center gap-8">
                         <Link href="/" className="flex items-center gap-2 group">
-                            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
+                            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform shadow-lg shadow-primary/20">
                                 <span className="text-white font-bold text-xs">AC</span>
                             </div>
                             <span className="text-xl font-bold text-primary tracking-tight">
@@ -45,15 +64,15 @@ const Navbar: React.FC = () => {
                             </span>
                         </Link>
 
-                        {/* Desktop Links */}
+                        {/* Desktop Menu - Modules Dropdown */}
                         <div
                             className="relative hidden md:block"
                             onMouseEnter={() => setIsModulesOpen(true)}
                             onMouseLeave={() => setIsModulesOpen(false)}
                         >
                             <button className={cn(
-                                "flex items-center gap-1.5 px-3 py-2 text-sm font-medium transition-colors rounded-md hover:bg-gray-100",
-                                isModulesOpen ? "text-primary bg-gray-100" : "text-gray-600"
+                                "flex items-center gap-1.5 px-3 py-2 text-sm font-medium transition-all rounded-lg hover:bg-gray-50",
+                                isModulesOpen ? "text-primary bg-gray-50" : "text-gray-600"
                             )}>
                                 Modules
                                 <ChevronDown className={cn(
@@ -63,7 +82,7 @@ const Navbar: React.FC = () => {
                             </button>
 
                             {isModulesOpen && (
-                                <div className="absolute left-0 mt-1 w-[300px] bg-white rounded-xl shadow-2xl border border-gray-100 overflow-hidden z-50">
+                                <div className="absolute left-0 mt-1 w-[300px] bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-200">
                                     <div className="p-2 bg-gray-50/50 border-b border-gray-100 px-4 py-2">
                                         <span className="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Available Modules</span>
                                     </div>
@@ -72,9 +91,9 @@ const Navbar: React.FC = () => {
                                             <Link
                                                 key={item.href}
                                                 href={item.href}
-                                                className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group"
+                                                className="flex items-start gap-3 p-3 rounded-xl hover:bg-gray-50 transition-all group"
                                             >
-                                                <div className="mt-1 p-2 bg-white rounded-md border border-gray-100 shadow-sm group-hover:border-accent-2 transition-colors">
+                                                <div className="mt-1 p-2 bg-white rounded-lg border border-gray-100 shadow-sm group-hover:border-accent-2 group-hover:shadow-md transition-all">
                                                     {item.icon}
                                                 </div>
                                                 <div>
@@ -93,11 +112,12 @@ const Navbar: React.FC = () => {
                         </div>
                     </div>
 
+                    {/* Right Side Actions */}
                     <div className="flex items-center gap-4">
                         <div className="hidden md:block">
                             <Link href="/login">
                                 <Button
-                                    className="border-gray-200 text-gray-600 hover:text-primary hover:border-primary font-medium px-5 h-9 rounded-lg flex items-center gap-2"
+                                    className="border-gray-200 text-gray-600 hover:text-primary hover:border-primary font-bold px-6 h-10 rounded-xl flex items-center gap-2 shadow-sm whitespace-nowrap"
                                 >
                                     <LogIn className="w-4 h-4" />
                                     Login
@@ -107,42 +127,66 @@ const Navbar: React.FC = () => {
 
                         {/* Mobile Menu Button */}
                         <button
-                            className="p-2 md:hidden text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
-                            onClick={() => setIsMenuOpen(!isMenuOpen)}
+                            onClick={() => setIsMenuOpen(true)}
+                            className="md:hidden p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
                         >
-                            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                            <Menu size={24} />
+                        </button>
+                    </div>
+                </div>
+            </nav>
+
+            {/* Mobile Menu Sidebar - Refactored based on approach */}
+            <div
+                className={cn(
+                    "fixed inset-0 z-[60] transform transition-transform duration-300 ease-in-out md:hidden",
+                    isMenuOpen ? "translate-x-0" : "-translate-x-full"
+                )}
+            >
+                <div
+                    className="absolute inset-0 bg-black/20 backdrop-blur-sm"
+                    onClick={() => setIsMenuOpen(false)}
+                ></div>
+                <div className="absolute left-0 top-0 h-full w-4/5 max-w-sm bg-white shadow-2xl p-6 flex flex-col">
+                    <div className="flex items-center justify-between mb-8">
+                        <Link href="/" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-2">
+                            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                                <span className="text-white font-bold text-xs">AC</span>
+                            </div>
+                            <span className="text-lg font-bold text-primary tracking-tight">appdev central</span>
+                        </Link>
+                        <button onClick={() => setIsMenuOpen(false)} className="text-gray-400 hover:text-primary transition-colors">
+                            <X size={24} />
                         </button>
                     </div>
 
-                </div>
-            </div>
-
-            {isMenuOpen && (
-                <div className="md:hidden bg-white border-b border-gray-200 py-4 px-4 absolute top-16 left-0 right-0 flex flex-col gap-4 animate-in slide-in-from-top duration-200">
-                    <div className="flex flex-col gap-2">
-                        <span className="text-[10px] uppercase font-bold text-gray-400 tracking-wider px-2">Modules</span>
+                    <div className="flex flex-col gap-4">
+                        <span className="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Modules</span>
                         {modules.map((item) => (
                             <Link
                                 key={item.href}
                                 href={item.href}
                                 onClick={() => setIsMenuOpen(false)}
-                                className="flex items-center gap-3 p-3"
+                                className="flex items-center gap-3 p-2 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors"
                             >
-                                <span className="text-sm text-gray-900">{item.title}</span>
+                                <span className="font-semibold text-gray-900">{item.title}</span>
                             </Link>
                         ))}
                     </div>
-                    <Link href="/login" onClick={() => setIsMenuOpen(false)}>
-                        <Button
-                            className="w-full border-gray-200 text-gray-600 font-medium h-12 rounded-xl flex items-center justify-center gap-2"
-                        >
-                            <LogIn className="w-5 h-5" />
-                            Login
-                        </Button>
-                    </Link>
+
+                    <div className="mt-auto">
+                        <Link href="/login" onClick={() => setIsMenuOpen(false)}>
+                            <Button
+                                className="w-full border-gray-200 text-gray-600 font-bold h-12 rounded-xl flex items-center justify-center gap-2 shadow-sm"
+                            >
+                                <LogIn className="w-5 h-5" />
+                                Login
+                            </Button>
+                        </Link>
+                    </div>
                 </div>
-            )}
-        </nav>
+            </div>
+        </>
     );
 };
 
