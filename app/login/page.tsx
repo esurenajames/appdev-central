@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -18,7 +18,16 @@ type FieldType = {
 export default function LoginPage() {
     const router = useRouter();
 
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            router.push('/dashboard');
+        }
+    }, [router]);
+
     const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
+        // You can store an actual user token/data here in the future
+        localStorage.setItem('token', 'true');
         router.push('/dashboard');
     };
 
@@ -84,6 +93,7 @@ export default function LoginPage() {
                         <div className="pt-2">
                             <Button
                                 type="primary"
+                                htmlType="submit"
                                 className="w-full bg-accent-1 text-white font-semibold rounded-xl transition-all"
                             >
                                 Log In

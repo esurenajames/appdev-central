@@ -81,7 +81,6 @@ export default function Sidebar() {
                 ))}
             </div>
 
-            {/* Bottom Actions */}
             <div className="p-5 flex flex-col gap-4">
                 <Link
                     href="/dashboard/settings"

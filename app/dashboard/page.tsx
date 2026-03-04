@@ -1,13 +1,78 @@
-import React from 'react';
+'use client';
+
+import { ChevronRight, Users, UserPlus, UsersRound } from 'lucide-react';
+import StatCard from '@/app/dashboard/components/StatCard';
+import DashboardUsersTable from '@/app/dashboard/components/DashboardUsersTable';
 
 export default function DashboardPage() {
     return (
-        <div className="p-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-6 tracking-tight">Dashboard Overview</h1>
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
-                <p className="text-gray-500">
-                    Welcome to your dashboard. This area will contain your overview metrics and charts.
-                </p>
+        <div className="p-8 max-w-7xl mx-auto w-full">
+            <div className="relative overflow-hidden bg-accent-1 rounded-[24px] p-8 md:p-12 mb-10 shadow-lg">
+                <div className="absolute inset-0 pointer-events-none">
+                    <svg className="absolute right-[5%] top-[15%] w-24 h-24 text-white/30" viewBox="0 0 100 100" fill="currentColor">
+                        <path d="M50 0 C50 30 70 50 100 50 C70 50 50 70 50 100 C50 70 30 50 0 50 C30 50 50 30 50 0Z" />
+                    </svg>
+                    <svg className="absolute right-[25%] bottom-[5%] w-32 h-32 text-white/20" viewBox="0 0 100 100" fill="currentColor">
+                        <path d="M50 0 C50 30 70 50 100 50 C70 50 50 70 50 100 C50 70 30 50 0 50 C30 50 50 30 50 0Z" />
+                    </svg>
+                    <svg className="absolute left-[50%] bottom-[-15%] w-28 h-28 text-white/10" viewBox="0 0 100 100" fill="currentColor">
+                        <path d="M50 0 C50 30 70 50 100 50 C70 50 50 70 50 100 C50 70 30 50 0 50 C30 50 50 30 50 0Z" />
+                    </svg>
+                </div>
+
+                <div className="relative z-10 w-full">
+                    <div className="text-white/80 text-[11px] font-bold tracking-[0.15em] mb-4 uppercase">
+                        User Management & Access Control
+                    </div>
+                    <h1 className="text-white text-4xl md:text-[46px] leading-[1.15] tracking-tight font-medium max-w-[700px] mb-8">
+                        Manage your users, assign roles, and control permissions.
+                    </h1>
+
+                    <button className="bg-white text-black p-1.5 pr-2 rounded-[32px] flex items-center gap-3 transition-colors shadow-xl w-max">
+                        <span className="font-semibold text-[15px] pl-5">Manage Users & Permissions</span>
+                        <div className="bg-black text-white w-8 h-8 rounded-full flex items-center justify-center">
+                            <ChevronRight strokeWidth={3} className="w-4 h-4" />
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Dashboard Overview</h2>
+            </div>
+
+            <div className="flex flex-col gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <StatCard
+                        title="Total Active Users"
+                        value="1,245"
+                        icon={<Users size={20} />}
+                        iconWrapperClassName="bg-blue-50 text-accent-1"
+                        trendValue="+12%"
+                        trendLabel="from last month"
+                        trendType="positive"
+                    />
+
+                    <StatCard
+                        title="New Users"
+                        value="86"
+                        icon={<UserPlus size={20} />}
+                        iconWrapperClassName="bg-green-50 text-green-600"
+                        trendValue="+5%"
+                        trendLabel="from last week"
+                        trendType="positive"
+                    />
+
+                    <StatCard
+                        title="Total Account Group"
+                        value="24"
+                        icon={<UsersRound size={20} />}
+                        iconWrapperClassName="bg-purple-50 text-purple-600"
+                        subtitle="Active organizational units"
+                    />
+                </div>
+
+                <DashboardUsersTable />
             </div>
         </div>
     );

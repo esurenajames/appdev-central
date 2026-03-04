@@ -39,3 +39,4 @@ Maintain the following structure for all new files and refactors:
 3. **Logic**: Keep business logic in `services/`, not in the components.
 4. **Naming**: Use PascalCase for components and camelCase for hooks/utils.
 5. **Forms**: Always use `Form` and `Input` from `antd` for forms and handle their validation rules.
+6. **Buttons**: Always use `Button` from `antd` instead of standard HTML `<button>` elements.
