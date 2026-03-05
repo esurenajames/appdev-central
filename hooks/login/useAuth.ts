@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { usePathname } from 'next/navigation';
 import api from '@/lib/api';
 
 export interface AuthUser {
@@ -24,9 +25,13 @@ async function fetchCurrentUser(): Promise<AuthUser> {
 }
 
 export function useAuth() {
+    const pathname = usePathname();
+    const isPublicPage = pathname === '/' || pathname === '/login' || pathname === '/landing';
+
     const query = useQuery<AuthUser>({
         queryKey: ['auth', 'me'],
         queryFn: fetchCurrentUser,
+        enabled: !!pathname && !isPublicPage,
         retry: false,
         staleTime: 5 * 60 * 1000, // 5 minutes
         refetchOnWindowFocus: false,
