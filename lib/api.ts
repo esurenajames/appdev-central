@@ -28,11 +28,17 @@ api.interceptors.response.use(
     (error) => {
         const message = error.response?.data?.message || error.message || 'Something went wrong';
 
-        notification.error({
-            title: 'Error',
-            description: message,
-            placement: 'topRight',
-        });
+        if (error.response?.status === 401) {
+            if (typeof window !== 'undefined' && window.location.pathname !== '/login') {
+                window.location.href = '/login';
+            }
+        } else {
+            notification.error({
+                title: 'Error',
+                description: message,
+                placement: 'topRight',
+            });
+        }
 
         return Promise.reject(error);
     }
