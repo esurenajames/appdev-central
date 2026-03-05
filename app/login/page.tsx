@@ -28,16 +28,16 @@ export default function LoginPage() {
         }
     }, [user, isLoading, router]);
 
-    // useEffect(() => {
-    //     if (error === 'unauthorized') {
-    //         notification.error({
-    //             message: 'Login Error',
-    //             description: 'You are not authorized to access this application.',
-    //             placement: 'topRight',
-    //         });
-    //         router.replace('/dashboard');
-    //     }
-    // }, [error, router]);
+    useEffect(() => {
+        if (error === 'unauthorized') {
+            notification.error({
+                title: 'Login Error',
+                description: 'You are not authorized to access this application.',
+                placement: 'topRight',
+            });
+            router.replace('/dashboard');
+        }
+    }, [error, router]);
 
     const handleGoogleLogin = () => {
         const backendUrl = process.env.GOOGLE_API_URL || 'http://localhost:8000';
