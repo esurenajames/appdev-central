@@ -54,13 +54,13 @@ export default function EditUserDialog({ visible, onCancel, onSave, user, isEdit
             <Form
                 form={form}
                 layout="vertical"
-                initialValues={{ status: true, accountType: 'Standard' }}
+                initialValues={{ isActive: true, AccountType: 'Standard' }}
             >
 
                 <div className="grid grid-cols-2 gap-4">
                     <Form.Item
                         label="Full Name"
-                        name="name"
+                        name="AccountName"
                         rules={[{ required: true, message: 'Please enter the user name' }]}
                     >
                         <Input placeholder="e.g. Florence Shaw" />
@@ -68,7 +68,7 @@ export default function EditUserDialog({ visible, onCancel, onSave, user, isEdit
 
                     <Form.Item
                         label="Nickname"
-                        name="nickname"
+                        name="Nickname"
                         rules={[{ required: true, message: 'Please enter the nickname' }]}
                     >
                         <Input placeholder="e.g. Florence" />
@@ -77,7 +77,7 @@ export default function EditUserDialog({ visible, onCancel, onSave, user, isEdit
 
                 <Form.Item
                     label="Email Address"
-                    name="email"
+                    name="Email"
                     rules={[
                         { required: true, message: 'Please enter the email address' },
                         { type: 'email', message: 'Please enter a valid email' }
@@ -89,7 +89,7 @@ export default function EditUserDialog({ visible, onCancel, onSave, user, isEdit
                 <div className="grid grid-cols-2 gap-4">
                     <Form.Item
                         label="Account Group"
-                        name="accountGroup"
+                        name="AccountGroup"
                         rules={[{ required: true, message: 'Required' }]}
                     >
                         <Select placeholder="Select Group">
@@ -103,7 +103,7 @@ export default function EditUserDialog({ visible, onCancel, onSave, user, isEdit
 
                     <Form.Item
                         label="Account Type"
-                        name="accountType"
+                        name="AccountType"
                         rules={[{ required: true, message: 'Required' }]}
                     >
                         <Select placeholder="Select Type">
@@ -116,7 +116,7 @@ export default function EditUserDialog({ visible, onCancel, onSave, user, isEdit
 
                 <Form.Item
                     label="Account Status"
-                    name="status"
+                    name="isActive"
                     valuePropName="checked"
                 >
                     <Switch checkedChildren="Active" unCheckedChildren="Inactive" />

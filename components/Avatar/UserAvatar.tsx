@@ -23,10 +23,9 @@ export default function UserAvatar({ src, domainAccount, name, size = 40, classN
 
     const identifier = domainAccount || name || '?';
     const initials = identifier.substring(0, 2).toUpperCase();
-
-    // Deterministic random color based on string
     const colorIndex = identifier.length % colors.length;
     const backgroundColor = colors[colorIndex];
+    const fontSize = typeof size === 'number' ? size / 2.5 : 16;
 
     return (
         <Avatar
@@ -34,7 +33,12 @@ export default function UserAvatar({ src, domainAccount, name, size = 40, classN
             className={className}
             style={{ backgroundColor, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
         >
-            <span className="text-[13px] font-bold text-white uppercase">{initials}</span>
+            <span
+                className="font-semibold text-white uppercase"
+                style={{ fontSize: `${fontSize}px`, lineHeight: 1 }}
+            >
+                {initials}
+            </span>
         </Avatar>
     );
 }

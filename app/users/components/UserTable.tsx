@@ -12,15 +12,20 @@ import { Users } from '@/interface/user';
 import UserFilterPopover, { FilterValues } from '@/components/Users/UserFilterPopover';
 
 const initialMockUsers: Users[] = Array.from({ length: 44 }).map((_, i) => ({
-    key: (i + 1).toString(),
-    accountId: `ACC-0${(i + 1).toString().padStart(2, '0')}`,
-    name: ['Florence Shaw', 'Amélie Laurent', 'Ammar Foley', 'Caitlyn King', 'Sienna Hewitt', 'Olly Shroeder'][i % 6],
-    nickname: ['Florence', 'Amélie', 'Ammar', 'Caitlyn', 'Sienna', 'Olly'][i % 6],
-    email: ['florence@untitledui.com', 'amelie@untitledui.com', 'ammar@untitledui.com', 'caitlyn@untitledui.com', 'sienna@untitledui.com', 'olly@untitledui.com'][i % 6],
-    avatar: `https://i.pravatar.cc/150?u=${i}`,
-    accountGroup: ['Management', 'Operations', 'Finance', 'Marketing', 'Engineering', 'IT Support'][i % 6],
-    accountType: i % 3 === 0 ? 'Admin' : i % 3 === 1 ? 'Standard' : 'Editor',
-    status: i % 10 !== 8 && i % 10 !== 9, // Mix of Active/Inactive
+    AccountID: i + 1,
+    AccountIDNo: `ACC-0${(i + 1).toString().padStart(2, '0')}`,
+    AONumber: "0",
+    AccountName: ['Florence Shaw', 'Amélie Laurent', 'Ammar Foley', 'Caitlyn King', 'Sienna Hewitt', 'Olly Shroeder'][i % 6],
+    Nickname: ['Florence', 'Amélie', 'Ammar', 'Caitlyn', 'Sienna', 'Olly'][i % 6],
+    Email: ['florence@untitledui.com', 'amelie@untitledui.com', 'ammar@untitledui.com', 'caitlyn@untitledui.com', 'sienna@untitledui.com', 'olly@untitledui.com'][i % 6],
+    GAvatar: `https://i.pravatar.cc/150?u=${i}`,
+    AccountGroup: ['Management', 'Operations', 'Finance', 'Marketing', 'Engineering', 'IT Support'][i % 6],
+    AccountType: i % 3 === 0 ? 'Admin' : i % 3 === 1 ? 'Standard' : 'Editor',
+    isActive: i % 10 !== 8 && i % 10 !== 9, // Mix of Active/Inactive
+    DomainAccount: ['FSHAW', 'ALAURENT', 'AFOLEY', 'CKING', 'SHEWITT', 'OSHROEDER'][i % 6],
+    ValidTo: '2030-01-01T00:00:00.000000Z',
+    SignaturePath: null,
+    SignatureImage: null,
 }));
 
 export default function UserTable() {
@@ -59,13 +64,20 @@ export default function UserTable() {
 
     const handleSaveUser = (values: any) => {
         if (isEditing && selectedUser) {
-            setUsers(prev => prev.map(u => u.key === selectedUser.key ? { ...u, ...values } : u));
+            setUsers(prev => prev.map(u => u.AccountID === selectedUser.AccountID ? { ...u, ...values } : u));
         } else {
             const newUser: Users = {
                 ...values,
-                key: (users.length + 1).toString(),
-                accountId: `ACC-0${(users.length + 1).toString().padStart(2, '0')}`,
-                avatar: `https://i.pravatar.cc/150?u=${users.length}`,
+                AccountID: users.length + 1,
+                AccountIDNo: `ACC-0${(users.length + 1).toString().padStart(2, '0')}`,
+                GAvatar: `https://i.pravatar.cc/150?u=${users.length}`,
+                AONumber: "0",
+                DomainAccount: values.AccountName?.substring(0, 8).toUpperCase() || 'NEWUSER',
+                ValidTo: '2030-01-01T00:00:00.000000Z',
+                SignaturePath: null,
+                SignatureImage: null,
+                Nickname: values.Nickname || null,
+                isActive: values.isActive ?? true,
             };
             setUsers(prev => [newUser, ...prev]);
         }
@@ -74,7 +86,7 @@ export default function UserTable() {
 
     const handleBulkStatusUpdate = (status: boolean) => {
         setUsers(prev => prev.map(user =>
-            selectedRowKeys.includes(user.key) ? { ...user, status } : user
+            selectedRowKeys.includes(user.AccountID) ? { ...user, isActive: status } : user
         ));
         setSelectedRowKeys([]);
     };
@@ -84,9 +96,9 @@ export default function UserTable() {
     };
 
     const filteredUsers = users.filter(user => {
-        const matchesStatus = activeFilters.status === null || user.status === activeFilters.status;
-        const matchesGroup = !activeFilters.accountGroup || user.accountGroup === activeFilters.accountGroup;
-        const matchesType = !activeFilters.accountType || user.accountType === activeFilters.accountType;
+        const matchesStatus = activeFilters.status === null || user.isActive === activeFilters.status;
+        const matchesGroup = !activeFilters.accountGroup || user.AccountGroup === activeFilters.accountGroup;
+        const matchesType = !activeFilters.accountType || user.AccountType === activeFilters.accountType;
 
         return matchesStatus && matchesGroup && matchesType;
     });
@@ -94,43 +106,43 @@ export default function UserTable() {
     const columns: ColumnsType<Users> = [
         {
             title: 'Account ID',
-            dataIndex: 'accountId',
-            key: 'accountId',
-            sorter: (a: Users, b: Users) => a.accountId.localeCompare(b.accountId),
-            render: (text: string) => <span className="text-gray-500 font-medium">{text}</span>
+            dataIndex: 'AccountID',
+            key: 'AccountID',
+            sorter: (a: Users, b: Users) => a.AccountID - b.AccountID,
+            render: (text: number) => <span className="text-gray-500 font-medium">{text}</span>
         },
         {
             title: 'User name',
-            dataIndex: 'name',
-            key: 'name',
-            sorter: (a: Users, b: Users) => a.name.localeCompare(b.name),
+            dataIndex: 'AccountName',
+            key: 'AccountName',
+            sorter: (a: Users, b: Users) => a.AccountName.localeCompare(b.AccountName),
             render: (text: string, record: Users) => (
                 <div className="flex items-center gap-3">
-                    <Avatar src={record.avatar} size={40} className="flex-shrink-0" />
+                    <Avatar src={record.GAvatar} size={40} className="flex-shrink-0" />
                     <div className="flex flex-col">
                         <span className="font-semibold text-gray-900 leading-none mb-1">{text}</span>
-                        <span className="text-gray-500 text-xs">{record.email}</span>
+                        <span className="text-gray-500 text-xs">{record.Email}</span>
                     </div>
                 </div>
             ),
         },
         {
             title: 'Account Group',
-            dataIndex: 'accountGroup',
-            key: 'accountGroup',
-            sorter: (a: Users, b: Users) => a.accountGroup.localeCompare(b.accountGroup),
+            dataIndex: 'AccountGroup',
+            key: 'AccountGroup',
+            sorter: (a: Users, b: Users) => a.AccountGroup.localeCompare(b.AccountGroup),
             render: (text: string) => <span className="text-gray-600 font-medium">{text}</span>
         },
         {
             title: 'Account Type',
-            dataIndex: 'accountType',
-            key: 'accountType',
+            dataIndex: 'AccountType',
+            key: 'AccountType',
             render: (type: string) => <span className="text-gray-600 font-medium">{type}</span>
         },
         {
             title: 'Status',
-            dataIndex: 'status',
-            key: 'status',
+            dataIndex: 'isActive',
+            key: 'isActive',
             render: (status: boolean) => <StatusChip status={status} />
         },
         {
@@ -220,6 +232,7 @@ export default function UserTable() {
                 </div>
 
                 <Table
+                    rowKey="AccountID"
                     rowSelection={{
                         type: 'checkbox',
                         ...rowSelection,

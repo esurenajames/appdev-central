@@ -1,8 +1,9 @@
 'use client';
 
 import React from 'react';
-import { Modal, Descriptions, Avatar, Tag } from 'antd';
+import { Modal, Descriptions, Tag } from 'antd';
 import StatusChip from '@/components/Table/StatusChip';
+import UserAvatar from '@/components/Avatar/UserAvatar';
 
 import { Users } from '@/interface/user';
 
@@ -33,26 +34,45 @@ export default function ViewUserDialog({ visible, onClose, user }: ViewUserDialo
             styles={{ body: { paddingTop: '20px' } }}
         >
             <div className="flex flex-col items-center mb-8">
-                <Avatar src={user.avatar} size={84} className="mb-4 shadow-sm border-2 border-white" />
-                <h2 className="text-xl font-bold text-gray-900">{user.name}</h2>
-                <p className="text-gray-500">{user.email}</p>
+                <UserAvatar
+                    src={user.GAvatar}
+                    domainAccount={user.DomainAccount}
+                    name={user.AccountName}
+                    size={84}
+                    className="shadow-sm border-2 border-white"
+                />
+                <h2 className="text-xl mt-2 font-bold text-gray-900">{user.AccountName}</h2>
+                <div className="flex items-center gap-2 text-gray-500">
+                    <span>{user.Email}</span>
+                    {user.DomainAccount && (
+                        <>
+                            <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
+                            <span className="font-medium">{user.DomainAccount}</span>
+                        </>
+                    )}
+                </div>
             </div>
 
             <Descriptions column={1} bordered size="small">
                 <Descriptions.Item label="Account ID">
-                    <span className="font-medium text-gray-700">{user.accountId}</span>
+                    <span className="font-medium text-gray-700">{user.AccountID}</span>
                 </Descriptions.Item>
                 <Descriptions.Item label="Nickname">
-                    <span className="font-medium text-gray-700">{user.nickname}</span>
+                    <span className="font-medium text-gray-700">{user.Nickname || 'N/A'}</span>
                 </Descriptions.Item>
                 <Descriptions.Item label="Account Group">
-                    <span className="font-medium text-gray-700">{user.accountGroup}</span>
+                    <span className="font-medium text-gray-700">{user.AccountGroup}</span>
                 </Descriptions.Item>
                 <Descriptions.Item label="Account Type">
-                    <Tag color="blue" className="rounded-full px-3">{user.accountType}</Tag>
+                    <Tag color="blue" className="rounded-full px-3">{user.AccountType}</Tag>
+                </Descriptions.Item>
+                <Descriptions.Item label="Valid To">
+                    <span className="font-medium text-gray-700">
+                        {user.ValidTo ? new Date(user.ValidTo).toLocaleDateString() : 'N/A'}
+                    </span>
                 </Descriptions.Item>
                 <Descriptions.Item label="Status">
-                    <StatusChip status={user.status} />
+                    <StatusChip status={user.isActive} />
                 </Descriptions.Item>
             </Descriptions>
         </Modal>
