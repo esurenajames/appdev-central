@@ -3,12 +3,13 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Users, Settings, MoreVertical, Menu, X, LogOut } from 'lucide-react';
-import { Dropdown } from 'antd';
+import { Home, Users, Settings, MoreVertical, Menu, X, LogOut, Loader2 } from 'lucide-react';
+import { Dropdown, Avatar } from 'antd';
 import type { MenuProps } from 'antd';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import SettingsModal from './Settings/SettingsModal';
+import { useAuth } from '@/hooks/login/useAuth';
 
 function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -18,6 +19,7 @@ export default function Sidebar() {
     const pathname = usePathname();
     const [isOpen, setIsOpen] = useState(false);
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+    const { user, isLoading } = useAuth();
 
     const userMenuItems: MenuProps['items'] = [
         {
@@ -116,13 +118,27 @@ export default function Sidebar() {
             <div className="p-5">
                 <Dropdown menu={{ items: userMenuItems }} placement="topRight" trigger={['click']}>
                     <div className="flex items-center justify-between pt-4 border-t border-gray-100 cursor-pointer group">
-                        <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 rounded-full bg-accent-1 text-white flex items-center justify-center font-bold text-sm shadow-sm group-hover:scale-105 transition-transform">
-                                A
-                            </div>
-                            <div className="flex flex-col text-left">
-                                <span className="text-[14px] font-semibold text-gray-900 leading-none mb-1">Admin User</span>
-                                <span className="text-[12px] text-gray-500 whitespace-nowrap">admin@appdev.com</span>
+                        <div className="flex items-center gap-3 overflow-hidden">
+                            {isLoading ? (
+                                <div className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center">
+                                    <Loader2 className="w-4 h-4 text-gray-400 animate-spin" />
+                                </div>
+                            ) : (
+                                <Avatar
+                                    src={user?.GAvatar}
+                                    size={36}
+                                    className="bg-accent-1 text-white font-bold shadow-sm group-hover:scale-105 transition-transform shrink-0"
+                                >
+                                    {user?.AccountName?.charAt(0) || 'U'}
+                                </Avatar>
+                            )}
+                            <div className="flex flex-col text-left overflow-hidden">
+                                <span className="text-[14px] font-semibold text-gray-900 leading-none mb-1 truncate">
+                                    {isLoading ? 'Loading...' : (user?.Nickname || user?.AccountName || 'Guest User')}
+                                </span>
+                                <span className="text-[12px] text-gray-500 truncate">
+                                    {isLoading ? 'Please wait' : (user?.Email || 'Not logged in')}
+                                </span>
                             </div>
                         </div>
                         <MoreVertical className="w-5 h-5 text-gray-400 group-hover:text-gray-700 transition-colors flex-shrink-0" />

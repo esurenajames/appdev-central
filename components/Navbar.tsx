@@ -3,8 +3,11 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Button } from 'antd';
-import { ChevronDown, Users, LogIn, Menu, X } from 'lucide-react';
+import { Button, Avatar, Dropdown } from 'antd';
+import type { MenuProps } from 'antd';
+import { ChevronDown, Users, LogIn, Menu, X, LogOut, User as UserIcon, LayoutDashboard, Settings } from 'lucide-react';
+import { useAuth } from '@/hooks/login/useAuth';
+import UserAvatar from './Avatar/UserAvatar';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -14,6 +17,7 @@ function cn(...inputs: ClassValue[]) {
 
 const Navbar: React.FC = () => {
     const pathname = usePathname();
+    const { user, isLoading } = useAuth();
     const [isModulesOpen, setIsModulesOpen] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
@@ -34,8 +38,41 @@ const Navbar: React.FC = () => {
         {
             title: 'User Management',
             description: 'Manage users, roles and permissions',
-            href: '/modules/users',
+            href: '/users',
             icon: <Users className="w-5 h-5 text-accent-2" />
+        },
+    ];
+
+    const userMenuItems: MenuProps['items'] = [
+        {
+            key: 'dashboard',
+            label: (
+                <Link href="/dashboard" className="flex items-center gap-2 py-1">
+                    <LayoutDashboard size={16} />
+                    <span>Dashboard</span>
+                </Link>
+            ),
+        },
+        {
+            key: 'settings',
+            label: (
+                <Link href="/settings" className="flex items-center gap-2 py-1">
+                    <Settings size={16} />
+                    <span>Settings</span>
+                </Link>
+            ),
+        },
+        {
+            type: 'divider',
+        },
+        {
+            key: 'logout',
+            label: (
+                <Link href="/login" className="flex items-center gap-2 py-1 text-red-500">
+                    <LogOut size={16} />
+                    <span>Logout</span>
+                </Link>
+            ),
         },
     ];
 
@@ -110,14 +147,39 @@ const Navbar: React.FC = () => {
 
                     <div className="flex items-center gap-4">
                         <div className="hidden md:block">
-                            <Link href="/login">
-                                <Button
-                                    className="border-gray-200 text-gray-600 hover:text-primary hover:border-primary font-bold px-6 h-10 rounded-xl flex items-center gap-2 shadow-sm whitespace-nowrap"
-                                >
-                                    <LogIn className="w-4 h-4" />
-                                    Login
-                                </Button>
-                            </Link>
+                            {isLoading ? (
+                                <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center animate-pulse" />
+                            ) : user ? (
+                                <Dropdown menu={{ items: userMenuItems }} placement="bottomRight" trigger={['click']}>
+                                    <button className="flex items-center gap-2.5 p-1 pr-3 rounded-full hover:bg-gray-50 transition-all border border-transparent hover:border-gray-200">
+                                        <UserAvatar
+                                            src={user.GAvatar}
+                                            name={user.AccountName}
+                                            domainAccount={user.DomainAccount}
+                                            size={36}
+                                            className="shadow-sm"
+                                        />
+                                        <div className="flex flex-col text-left">
+                                            <span className="text-sm font-bold text-gray-900 leading-none mb-0.5">
+                                                {user.Nickname || user.AccountName}
+                                            </span>
+                                            <span className="text-[10px] text-gray-500 font-medium tracking-tight">
+                                                {user.AccountGroup} • {user.AccountType}
+                                            </span>
+                                        </div>
+                                        <ChevronDown size={14} className="text-gray-400 ml-1" />
+                                    </button>
+                                </Dropdown>
+                            ) : (
+                                <Link href="/login">
+                                    <Button
+                                        className="border-gray-200 text-gray-600 hover:text-primary hover:border-primary font-bold px-6 h-10 rounded-xl flex items-center gap-2 shadow-sm whitespace-nowrap"
+                                    >
+                                        <LogIn className="w-4 h-4" />
+                                        Login
+                                    </Button>
+                                </Link>
+                            )}
                         </div>
                         <button
                             onClick={() => setIsMenuOpen(true)}
@@ -167,15 +229,52 @@ const Navbar: React.FC = () => {
                         ))}
                     </div>
 
-                    <div className="mt-auto">
-                        <Link href="/login" onClick={() => setIsMenuOpen(false)}>
-                            <Button
-                                className="w-full border-gray-200 text-gray-600 font-bold h-12 rounded-xl flex items-center justify-center gap-2 shadow-sm"
-                            >
-                                <LogIn className="w-5 h-5" />
-                                Login
-                            </Button>
-                        </Link>
+                    <div className="mt-auto pt-6 border-t border-gray-100">
+                        {isLoading ? (
+                            <div className="w-full h-12 bg-gray-50 rounded-xl animate-pulse" />
+                        ) : user ? (
+                            <div className="flex flex-col gap-4">
+                                <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-2xl">
+                                    <UserAvatar
+                                        src={user.GAvatar}
+                                        name={user.AccountName}
+                                        domainAccount={user.DomainAccount}
+                                        size={48}
+                                    />
+                                    <div className="flex flex-col text-left overflow-hidden">
+                                        <span className="text-base font-bold text-gray-900 leading-none mb-1 truncate">
+                                            {user.AccountName}
+                                        </span>
+                                        <span className="text-xs text-gray-500 truncate">
+                                            {user.Email}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-2 gap-2">
+                                    <Link href="/dashboard" onClick={() => setIsMenuOpen(false)} className="w-full">
+                                        <Button className="w-full flex items-center justify-center gap-2 h-11 rounded-xl">
+                                            <LayoutDashboard size={16} />
+                                            Dashboard
+                                        </Button>
+                                    </Link>
+                                    <Link href="/login" onClick={() => setIsMenuOpen(false)} className="w-full">
+                                        <Button danger className="w-full flex items-center justify-center gap-2 h-11 rounded-xl">
+                                            <LogOut size={16} />
+                                            Logout
+                                        </Button>
+                                    </Link>
+                                </div>
+                            </div>
+                        ) : (
+                            <Link href="/login" onClick={() => setIsMenuOpen(false)}>
+                                <Button
+                                    className="w-full border-gray-200 text-gray-600 font-bold h-12 rounded-xl flex items-center justify-center gap-2 shadow-sm"
+                                >
+                                    <LogIn className="w-5 h-5" />
+                                    Login
+                                </Button>
+                            </Link>
+                        )}
                     </div>
                 </div>
             </div>

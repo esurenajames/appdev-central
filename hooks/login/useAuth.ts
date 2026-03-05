@@ -17,21 +17,25 @@ export interface AuthUser {
     Nickname: string;
     isActive: boolean;
     GAvatar: string | null;
+    TCDRole: string | null;
+    ProcurementRole: string | null;
+    AllowTCDAccess: boolean;
+    AllowProcurementAccess: boolean;
 }
 
 async function fetchCurrentUser(): Promise<AuthUser> {
     const { data } = await api.get('/user');
-    return data.user;
+    return data.data;
 }
 
 export function useAuth() {
     const pathname = usePathname();
-    const isPublicPage = pathname === '/' || pathname === '/login' || pathname === '/landing';
+    const isLoginPage = pathname === '/login';
 
     const query = useQuery<AuthUser>({
         queryKey: ['auth', 'me'],
         queryFn: fetchCurrentUser,
-        enabled: !!pathname && !isPublicPage,
+        enabled: !!pathname && !isLoginPage,
         retry: false,
         staleTime: 5 * 60 * 1000, // 5 minutes
         refetchOnWindowFocus: false,
