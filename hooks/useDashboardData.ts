@@ -23,21 +23,21 @@ export const useUserCount = () => {
 };
 
 export const useAccountGroupStats = () => {
-    return useQuery<number>({
+    return useQuery<{ count: number; groups: any[] }>({
         queryKey: ['users', 'stats', 'groups'],
         queryFn: async () => {
             const { data } = await api.get('/users/stats/groups');
-            return data.count;
+            return data;
         },
     });
 };
 
 export const useAccountTypeStats = () => {
-    return useQuery<number>({
+    return useQuery<{ count: number; types: any[] }>({
         queryKey: ['users', 'stats', 'types'],
         queryFn: async () => {
             const { data } = await api.get('/users/stats/types');
-            return data.count;
+            return data;
         },
     });
 };
