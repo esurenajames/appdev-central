@@ -9,7 +9,7 @@ import type { MenuProps } from 'antd';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import SettingsModal from './Settings/SettingsModal';
-import { useAuth } from '@/hooks/login/useAuth';
+import { useAuth, useLogout } from '@/hooks/login/useAuth';
 
 function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -20,6 +20,7 @@ export default function Sidebar() {
     const [isOpen, setIsOpen] = useState(false);
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const { user, isLoading } = useAuth();
+    const { mutate: logout } = useLogout();
 
     const userMenuItems: MenuProps['items'] = [
         {
@@ -35,11 +36,12 @@ export default function Sidebar() {
         {
             key: 'logout',
             label: (
-                <Link href="/login" className="flex items-center gap-2 py-1 text-red-500">
+                <div className="flex items-center gap-2 py-1 text-red-500">
                     <LogOut size={16} />
                     <span>Logout</span>
-                </Link>
+                </div>
             ),
+            onClick: () => logout(),
         },
     ];
 

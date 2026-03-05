@@ -3,15 +3,24 @@
 import React, { useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { Button, notification } from 'antd';
+import { useAuth } from '@/hooks/login/useAuth';
 
 import dashboardMockup from './assets/image-removebg-preview.png';
 import StackIcon from 'tech-stack-icons';
 
 export default function LoginPage() {
     const searchParams = useSearchParams();
+    const router = useRouter();
     const error = searchParams.get('error');
+    const { user, isLoading } = useAuth();
+
+    useEffect(() => {
+        if (user && !isLoading) {
+            router.push('/dashboard');
+        }
+    }, [user, isLoading, router]);
 
     useEffect(() => {
         if (error === 'unauthorized') {

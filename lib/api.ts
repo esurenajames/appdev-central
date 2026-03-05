@@ -29,7 +29,11 @@ api.interceptors.response.use(
         const message = error.response?.data?.message || error.message || 'Something went wrong';
 
         if (error.response?.status === 401) {
-            if (typeof window !== 'undefined' && window.location.pathname !== '/login') {
+            const protectedRoutes = ['/dashboard', '/users'];
+            const currentPath = typeof window !== 'undefined' ? window.location.pathname : '';
+            const isProtectedRoute = protectedRoutes.some(route => currentPath.startsWith(route));
+
+            if (isProtectedRoute && currentPath !== '/login') {
                 window.location.href = '/login';
             }
         } else {

@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import { Button, Avatar, Dropdown } from 'antd';
 import type { MenuProps } from 'antd';
 import { ChevronDown, Users, LogIn, Menu, X, LogOut, User as UserIcon, LayoutDashboard, Settings } from 'lucide-react';
-import { useAuth } from '@/hooks/login/useAuth';
+import { useAuth, useLogout } from '@/hooks/login/useAuth';
 import UserAvatar from './Avatar/UserAvatar';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -18,6 +18,7 @@ function cn(...inputs: ClassValue[]) {
 const Navbar: React.FC = () => {
     const pathname = usePathname();
     const { user, isLoading } = useAuth();
+    const { mutate: logout } = useLogout();
     const [isModulesOpen, setIsModulesOpen] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
@@ -68,11 +69,12 @@ const Navbar: React.FC = () => {
         {
             key: 'logout',
             label: (
-                <Link href="/login" className="flex items-center gap-2 py-1 text-red-500">
+                <div className="flex items-center gap-2 py-1 text-red-500">
                     <LogOut size={16} />
                     <span>Logout</span>
-                </Link>
+                </div>
             ),
+            onClick: () => logout(),
         },
     ];
 
@@ -257,12 +259,17 @@ const Navbar: React.FC = () => {
                                             Dashboard
                                         </Button>
                                     </Link>
-                                    <Link href="/login" onClick={() => setIsMenuOpen(false)} className="w-full">
-                                        <Button danger className="w-full flex items-center justify-center gap-2 h-11 rounded-xl">
-                                            <LogOut size={16} />
-                                            Logout
-                                        </Button>
-                                    </Link>
+                                    <Button
+                                        danger
+                                        className="w-full flex items-center justify-center gap-2 h-11 rounded-xl"
+                                        onClick={() => {
+                                            logout();
+                                            setIsMenuOpen(false);
+                                        }}
+                                    >
+                                        <LogOut size={16} />
+                                        Logout
+                                    </Button>
                                 </div>
                             </div>
                         ) : (

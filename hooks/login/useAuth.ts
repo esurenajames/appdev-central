@@ -1,5 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
-import { usePathname } from 'next/navigation';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { usePathname, useRouter } from 'next/navigation';
 import api from '@/lib/api';
 
 export interface AuthUser {
@@ -48,4 +48,20 @@ export function useAuth() {
         error: query.error,
         refetch: query.refetch,
     };
+}
+
+export function useLogout() {
+    const queryClient = useQueryClient();
+    const router = useRouter();
+
+    return useMutation({
+        mutationFn: async () => {
+            const { data } = await api.post('/logout');
+            return data;
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['auth'] });
+            router.push('/login');
+        },
+    });
 }
