@@ -8,7 +8,7 @@ import { Form, Input, Button, notification } from 'antd';
 
 import dashboardMockup from './assets/image-removebg-preview.png';
 import StackIcon from 'tech-stack-icons';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks/login/useAuth';
 
 type FieldType = {
     email?: string;

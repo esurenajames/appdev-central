@@ -7,7 +7,7 @@ import DashboardStatCard from '@/app/dashboard/components/DashboardStatCard';
 import DashboardUsersTable from '@/app/dashboard/components/DashboardUsersTable';
 import DashboardBanner from '@/app/dashboard/components/DashboardBanner';
 import DashboardStatsDialog from '@/app/dashboard/components/DashboardStatsDialog';
-import { useUserCount, useAccountGroupStats, useAccountTypeStats } from '@/hooks/useDashboardData';
+import { useUserCount, useAccountGroupStats, useAccountTypeStats } from '@/hooks/dashboard/useDashboardData';
 
 export default function DashboardPage() {
     const router = useRouter();

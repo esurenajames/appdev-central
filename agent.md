@@ -32,11 +32,31 @@ Maintain the following structure for all new files and refactors:
 ├── public/           # Static assets
 ```
 
+## ✨ Common Components
+
+### 1. StatusChip (Table Status)
+Always use the `StatusChip` component for boolean statuses in tables (Active/Inactive).
+- **Location**: `components/Table/StatusChip.tsx`
+- **Props**: `status: boolean`
+- **Usage**: `<StatusChip status={record.isActive} />`
+
+### 2. UserAvatar (Profile Pictures & Initials)
+Always use `UserAvatar` for any user-related profile icon. It automatically handles initials with a deterministic background color if `src` is missing.
+- **Location**: `components/Avatar/UserAvatar.tsx`
+- **Props**:
+    - `src?: string | null`: The image URL.
+    - `domainAccount?: string | null`: Used for generating initials.
+    - `name?: string | null`: Fallback for initials if domainAccount is missing.
+    - `size?: number`: The circle diameter. Initials' font size scales automatically.
+- **Usage**: `<UserAvatar src={user.GAvatar} name={user.AccountName} size={40} />`
+
 ## 🛠️ Implementation Guidelines
 1. **Styling**: Always use the defined theme colors. Avoid hardcoded hex values in components.
-2. **Components**: Prioritize creating reusable components in `components/ui/`.
-3. **Logic**: Keep business logic in `services/`, not in the components.
-4. **Naming**: Use PascalCase for components and camelCase for hooks/utils.
-5. **Forms**: Always use `Form` and `Input` from `antd` for forms and handle their validation rules.
-6. **Buttons**: Always use `Button` from `antd` instead of standard HTML `<button>` elements.
-7. **Types/Interfaces**: Always ask the user for confirmation before creating new types or interfaces.
+2. **Components**: Prioritize creating reusable components and using existing ones from `components/`.
+3. **Tables**: Use `StatusChip` for boolean status flags and `UserAvatar` for user entries.
+4. **Logic**: Keep business logic in `services/`, not in the components.
+5. **Naming**: Use PascalCase for components and camelCase for hooks/utils.
+6. **Forms**: Always use `Form` and `Input` from `antd` for forms and handle their validation rules.
+7. **Buttons**: Always use `Button` from `antd` instead of standard HTML `<button>` elements.
+8. **Data**: Always use the organized hooks in `hooks/` (e.g., `hooks/users/`, `hooks/dashboard/`).
+9. **Types/Interfaces**: Refer to `interface/user.ts` for the correct PascalCase backend property names (AccountID, AccountName, etc.).

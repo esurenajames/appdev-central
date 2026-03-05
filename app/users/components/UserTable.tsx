@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Table, Avatar, Button, Dropdown } from 'antd';
+import { Table, Button, Dropdown } from 'antd';
 import type { MenuProps } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { Search, Plus, RotateCcw, CheckCircle, XCircle, MoreHorizontal, Edit3 } from 'lucide-react';
@@ -11,25 +11,10 @@ import ViewUserDialog from '@/components/Users/ViewUserDialog';
 import { Users } from '@/interface/user';
 import UserFilterPopover, { FilterValues } from '@/components/Users/UserFilterPopover';
 
-const initialMockUsers: Users[] = Array.from({ length: 44 }).map((_, i) => ({
-    AccountID: i + 1,
-    AccountIDNo: `ACC-0${(i + 1).toString().padStart(2, '0')}`,
-    AONumber: "0",
-    AccountName: ['Florence Shaw', 'Amélie Laurent', 'Ammar Foley', 'Caitlyn King', 'Sienna Hewitt', 'Olly Shroeder'][i % 6],
-    Nickname: ['Florence', 'Amélie', 'Ammar', 'Caitlyn', 'Sienna', 'Olly'][i % 6],
-    Email: ['florence@untitledui.com', 'amelie@untitledui.com', 'ammar@untitledui.com', 'caitlyn@untitledui.com', 'sienna@untitledui.com', 'olly@untitledui.com'][i % 6],
-    GAvatar: `https://i.pravatar.cc/150?u=${i}`,
-    AccountGroup: ['Management', 'Operations', 'Finance', 'Marketing', 'Engineering', 'IT Support'][i % 6],
-    AccountType: i % 3 === 0 ? 'Admin' : i % 3 === 1 ? 'Standard' : 'Editor',
-    isActive: i % 10 !== 8 && i % 10 !== 9, // Mix of Active/Inactive
-    DomainAccount: ['FSHAW', 'ALAURENT', 'AFOLEY', 'CKING', 'SHEWITT', 'OSHROEDER'][i % 6],
-    ValidTo: '2030-01-01T00:00:00.000000Z',
-    SignaturePath: null,
-    SignatureImage: null,
-}));
+import UserAvatar from '@/components/Avatar/UserAvatar';
+import { useUsersPaginated } from '@/hooks/users/useUsers';
 
 export default function UserTable() {
-    const [users, setUsers] = useState<Users[]>(initialMockUsers);
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
     // Filter states
@@ -37,6 +22,18 @@ export default function UserTable() {
         accountGroup: null,
         accountType: null,
         status: null,
+    });
+
+    const [pagination, setPagination] = useState({
+        current: 1,
+        pageSize: 10,
+    });
+
+    // Fetch users using the hook
+    const { data, isLoading } = useUsersPaginated(pagination.current, pagination.pageSize, {
+        AccountGroup: activeFilters.accountGroup,
+        AccountType: activeFilters.accountType,
+        isActive: activeFilters.status,
     });
 
     // Modal states
@@ -63,45 +60,20 @@ export default function UserTable() {
     };
 
     const handleSaveUser = (values: any) => {
-        if (isEditing && selectedUser) {
-            setUsers(prev => prev.map(u => u.AccountID === selectedUser.AccountID ? { ...u, ...values } : u));
-        } else {
-            const newUser: Users = {
-                ...values,
-                AccountID: users.length + 1,
-                AccountIDNo: `ACC-0${(users.length + 1).toString().padStart(2, '0')}`,
-                GAvatar: `https://i.pravatar.cc/150?u=${users.length}`,
-                AONumber: "0",
-                DomainAccount: values.AccountName?.substring(0, 8).toUpperCase() || 'NEWUSER',
-                ValidTo: '2030-01-01T00:00:00.000000Z',
-                SignaturePath: null,
-                SignatureImage: null,
-                Nickname: values.Nickname || null,
-                isActive: values.isActive ?? true,
-            };
-            setUsers(prev => [newUser, ...prev]);
-        }
+        // This will eventually be replaced with a useMutation hook
+        console.log('Save user:', values);
         setIsEditModalVisible(false);
     };
 
     const handleBulkStatusUpdate = (status: boolean) => {
-        setUsers(prev => prev.map(user =>
-            selectedRowKeys.includes(user.AccountID) ? { ...user, isActive: status } : user
-        ));
+        // This will eventually be replaced with a useMutation hook
+        console.log('Bulk status update:', status, selectedRowKeys);
         setSelectedRowKeys([]);
     };
 
     const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
         setSelectedRowKeys(newSelectedRowKeys);
     };
-
-    const filteredUsers = users.filter(user => {
-        const matchesStatus = activeFilters.status === null || user.isActive === activeFilters.status;
-        const matchesGroup = !activeFilters.accountGroup || user.AccountGroup === activeFilters.accountGroup;
-        const matchesType = !activeFilters.accountType || user.AccountType === activeFilters.accountType;
-
-        return matchesStatus && matchesGroup && matchesType;
-    });
 
     const columns: ColumnsType<Users> = [
         {
@@ -118,7 +90,13 @@ export default function UserTable() {
             sorter: (a: Users, b: Users) => a.AccountName.localeCompare(b.AccountName),
             render: (text: string, record: Users) => (
                 <div className="flex items-center gap-3">
-                    <Avatar src={record.GAvatar} size={40} className="flex-shrink-0" />
+                    <UserAvatar
+                        src={record.GAvatar}
+                        name={record.AccountName}
+                        domainAccount={record.DomainAccount}
+                        size={40}
+                        className="flex-shrink-0"
+                    />
                     <div className="flex flex-col">
                         <span className="font-semibold text-gray-900 leading-none mb-1">{text}</span>
                         <span className="text-gray-500 text-xs">{record.Email}</span>
@@ -181,16 +159,10 @@ export default function UserTable() {
         },
     ];
 
-    const [pagination, setPagination] = useState({
-        current: 1,
-        pageSize: 10,
-        total: filteredUsers.length,
-    });
-
     const handleTableChange = (newPagination: any) => {
         setPagination({
-            ...newPagination,
-            total: filteredUsers.length,
+            current: newPagination.current,
+            pageSize: newPagination.pageSize,
         });
     };
 
@@ -205,7 +177,7 @@ export default function UserTable() {
                 <div className="p-6 border-b border-gray-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="flex items-center gap-2">
                         <h2 className="text-lg font-bold text-gray-900">All users</h2>
-                        <span className="bg-accent-1 text-white px-2 py-0.5 rounded-full text-xs font-bold">{filteredUsers.length}</span>
+                        <span className="bg-accent-1 text-white px-2 py-0.5 rounded-full text-xs font-bold">{data?.meta?.total || 0}</span>
                     </div>
 
                     <div className="flex items-center gap-3">
@@ -233,15 +205,17 @@ export default function UserTable() {
 
                 <Table
                     rowKey="AccountID"
+                    loading={isLoading}
                     rowSelection={{
                         type: 'checkbox',
                         ...rowSelection,
                     }}
                     columns={columns}
-                    dataSource={filteredUsers}
+                    dataSource={data?.data || []}
                     pagination={{
-                        ...pagination,
-                        total: filteredUsers.length,
+                        current: pagination.current,
+                        pageSize: pagination.pageSize,
+                        total: data?.meta?.total || 0,
                         showSizeChanger: true,
                         pageSizeOptions: ['10', '20', '30', '50'],
                         className: 'p-6 !mb-0 border-t border-gray-100',
@@ -268,7 +242,6 @@ export default function UserTable() {
                 />
             </div>
 
-            {/* Floating Bulk Action Bar */}
             {selectedRowKeys.length > 0 && (
                 <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 animate-in fade-in slide-in-from-bottom-4 duration-300">
                     <div className="bg-white/90 backdrop-blur-md border border-gray-200 shadow-2xl rounded-xl px-6 py-3 flex items-center gap-4">

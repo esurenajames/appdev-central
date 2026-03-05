@@ -7,7 +7,7 @@ import StatusChip from '@/components/Table/StatusChip';
 import { Users } from '@/interface/user';
 import ViewUserDialog from '@/components/Users/ViewUserDialog';
 
-import { useLatestUsers } from '@/hooks/useDashboardData';
+import { useLatestUsers } from '@/hooks/dashboard/useDashboardData';
 import UserAvatar from '@/components/Avatar/UserAvatar';
 
 export default function NewestUsersTable() {
