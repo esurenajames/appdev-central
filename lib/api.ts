@@ -18,7 +18,7 @@ api.interceptors.response.use(
 
         if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(method || '') && hasMessage) {
             notification.success({
-                message: 'Success',
+                title: 'Success',
                 description: response.data.message,
                 placement: 'topRight',
             });
@@ -29,7 +29,7 @@ api.interceptors.response.use(
         const message = error.response?.data?.message || error.message || 'Something went wrong';
 
         notification.error({
-            message: 'Error',
+            title: 'Error',
             description: message,
             placement: 'topRight',
         });

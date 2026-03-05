@@ -60,3 +60,4 @@ Always use `UserAvatar` for any user-related profile icon. It automatically hand
 7. **Buttons**: Always use `Button` from `antd` instead of standard HTML `<button>` elements.
 8. **Data**: Always use the organized hooks in `hooks/` (e.g., `hooks/users/`, `hooks/dashboard/`).
 9. **Types/Interfaces**: Refer to `interface/user.ts` for the correct PascalCase backend property names (AccountID, AccountName, etc.).
+10. **Notifications**: When using Ant Design `notification`, always use `title` as the main header and `description` for the body content. Placement must always be set to `topRight`.
