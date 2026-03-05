@@ -28,19 +28,19 @@ export default function LoginPage() {
         }
     }, [user, isLoading, router]);
 
-    useEffect(() => {
-        if (error === 'unauthorized') {
-            notification.error({
-                message: 'Login Error',
-                description: 'You are not authorized to access this application.',
-                placement: 'topRight',
-            });
-            router.replace('/login');
-        }
-    }, [error, router]);
+    // useEffect(() => {
+    //     if (error === 'unauthorized') {
+    //         notification.error({
+    //             message: 'Login Error',
+    //             description: 'You are not authorized to access this application.',
+    //             placement: 'topRight',
+    //         });
+    //         router.replace('/dashboard');
+    //     }
+    // }, [error, router]);
 
     const handleGoogleLogin = () => {
-        const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+        const backendUrl = process.env.GOOGLE_API_URL || 'http://localhost:8000';
         window.location.href = `${backendUrl}/auth/google/redirect`;
     };
 

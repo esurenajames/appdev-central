@@ -7,19 +7,11 @@ import StatusChip from '@/components/Table/StatusChip';
 import { Users } from '@/interface/user';
 import ViewUserDialog from '@/components/Users/ViewUserDialog';
 
-const mockNewUsers: Users[] = Array.from({ length: 10 }).map((_, i) => ({
-    key: (i + 1).toString(),
-    accountId: `ACC-0${(i + 1).toString().padStart(2, '0')}`,
-    name: ['Florence Shaw', 'Amélie Laurent', 'Ammar Foley', 'Caitlyn King', 'Sienna Hewitt', 'Olly Shroeder'][i % 6],
-    nickname: ['Florence', 'Amélie', 'Ammar', 'Caitlyn', 'Sienna', 'Olly'][i % 6],
-    email: ['florence@untitledui.com', 'amelie@untitledui.com', 'ammar@untitledui.com', 'caitlyn@untitledui.com', 'sienna@untitledui.com', 'olly@untitledui.com'][i % 6],
-    avatar: `https://i.pravatar.cc/150?u=${i}`,
-    accountGroup: ['Management', 'Operations', 'Finance', 'Marketing', 'Engineering', 'IT Support'][i % 6],
-    accountType: i % 3 === 0 ? 'Admin' : i % 3 === 1 ? 'Standard' : 'Editor',
-    status: i % 10 !== 8 && i % 10 !== 9, // Mix of Active/Inactive
-}));
+import { useLatestUsers } from '@/hooks/useDashboardData';
+import UserAvatar from '@/components/Avatar/UserAvatar';
 
 export default function NewestUsersTable() {
+    const { data: latestUsers = [] } = useLatestUsers();
     const [selectedUser, setSelectedUser] = useState<Users | null>(null);
     const [isViewModalVisible, setIsViewModalVisible] = useState(false);
 
@@ -31,40 +23,45 @@ export default function NewestUsersTable() {
     const columns: ColumnsType<Users> = [
         {
             title: 'Account ID',
-            dataIndex: 'accountId',
-            key: 'accountId',
+            dataIndex: 'AccountID',
+            key: 'AccountID',
             render: (text) => <span className="text-gray-500 font-medium">{text}</span>
         },
         {
             title: 'User',
-            dataIndex: 'name',
-            key: 'name',
+            dataIndex: 'AccountName',
+            key: 'AccountName',
             render: (text, record) => (
                 <div className="flex items-center gap-3">
-                    <Avatar src={record.avatar} size={40} className="flex-shrink-0" />
+                    <UserAvatar
+                        src={record.GAvatar}
+                        domainAccount={record.DomainAccount}
+                        size={40}
+                        className="flex-shrink-0"
+                    />
                     <div className="flex flex-col">
                         <span className="font-semibold text-gray-900 whitespace-nowrap">{text}</span>
-                        <span className="text-xs text-gray-500">{record.email}</span>
+                        <span className="text-xs text-gray-500">{record.Email}</span>
                     </div>
                 </div>
             )
         },
         {
             title: 'Account Group',
-            dataIndex: 'accountGroup',
-            key: 'accountGroup',
+            dataIndex: 'AccountGroup',
+            key: 'AccountGroup',
             render: (text) => <span className="text-gray-600 font-medium">{text}</span>
         },
         {
             title: 'Account Type',
-            dataIndex: 'accountType',
-            key: 'accountType',
+            dataIndex: 'AccountType',
+            key: 'AccountType',
             render: (type) => <span className="text-gray-600 font-medium">{type}</span>
         },
         {
             title: 'Status',
-            dataIndex: 'status',
-            key: 'status',
+            dataIndex: 'isActive',
+            key: 'isActive',
             render: (status) => <StatusChip status={status} />
         }
     ];
@@ -77,7 +74,8 @@ export default function NewestUsersTable() {
             </div>
             <Table
                 columns={columns}
-                dataSource={mockNewUsers}
+                dataSource={latestUsers}
+                rowKey="AccountID"
                 pagination={false}
                 className="w-full cursor-pointer"
                 rowClassName="hover:bg-gray-50 transition-colors"

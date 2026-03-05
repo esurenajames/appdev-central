@@ -11,9 +11,6 @@ export interface StatCardProps {
     value: string | number;
     icon: ReactNode;
     iconWrapperClassName?: string;
-    trendLabel?: string;
-    trendValue?: string;
-    trendType?: 'positive' | 'negative' | 'neutral';
     subtitle?: string;
 }
 
@@ -22,9 +19,6 @@ export default function DashboardStatCard({
     value,
     icon,
     iconWrapperClassName,
-    trendLabel,
-    trendValue,
-    trendType = 'neutral',
     subtitle,
 }: StatCardProps) {
     return (
@@ -41,17 +35,6 @@ export default function DashboardStatCard({
                 {subtitle && (
                     <div className="text-sm text-gray-500 font-normal flex items-center mt-1">
                         {subtitle}
-                    </div>
-                )}
-
-                {trendValue && trendLabel && (
-                    <div className={cn(
-                        "text-sm font-medium flex items-center mt-1",
-                        trendType === 'positive' && "text-green-500",
-                        trendType === 'negative' && "text-red-500",
-                        trendType === 'neutral' && "text-gray-500"
-                    )}>
-                        <span>{trendValue}</span><span className="text-gray-400 ml-1 font-normal">{trendLabel}</span>
                     </div>
                 )}
             </div>

@@ -19,7 +19,7 @@ export interface AuthUser {
 }
 
 async function fetchCurrentUser(): Promise<AuthUser> {
-    const { data } = await api.get('/api/me');
+    const { data } = await api.get('/user');
     return data.user;
 }
 

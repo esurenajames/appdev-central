@@ -1,11 +1,16 @@
 export interface Users {
-    key: string;
-    accountId: string;
-    name: string;
-    nickname: string;
-    email: string;
-    avatar?: string;
-    accountGroup: string;
-    accountType: string;
-    status: boolean;
+    AccountID: number;
+    AccountIDNo: string;
+    AONumber: string;
+    AccountName: string;
+    AccountGroup: string;
+    AccountType: string;
+    DomainAccount: string;
+    Email: string;
+    ValidTo: string | null;
+    SignaturePath: string | null;
+    SignatureImage: string | null;
+    Nickname: string | null;
+    isActive: boolean;
+    GAvatar: string | null;
 }
