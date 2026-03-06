@@ -53,13 +53,13 @@ export const useAssignedAccounts = (id: number | null) => {
 export const useUpdateAssignments = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async ({ managerId, userIds }: { managerId: number; userIds: number[] }) => {
-            const { data } = await api.post(`/managers/${managerId}/assign`, { userIds });
+        mutationFn: async (payload: { parent: number; data: { userIds: number[] } }) => {
+            const { data } = await api.post(`/managers/${payload.parent}/assign`, payload);
             return data;
         },
-        onSuccess: (_, { managerId }) => {
+        onSuccess: (_, payload) => {
             queryClient.invalidateQueries({ queryKey: ['managers'] });
-            queryClient.invalidateQueries({ queryKey: ['assigned-accounts', managerId] });
+            queryClient.invalidateQueries({ queryKey: ['assigned-accounts', payload.parent] });
         },
     });
 };

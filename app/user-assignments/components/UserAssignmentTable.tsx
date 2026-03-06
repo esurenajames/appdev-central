@@ -79,7 +79,7 @@ export default function UserAssignmentTable() {
     };
 
     const handleSaveAssignments = (payload: { parent: number; data: { userIds: number[] } }) => {
-        updateAssignments.mutate({ managerId: payload.parent, userIds: payload.data.userIds }, {
+        updateAssignments.mutate(payload, {
             onSuccess: () => {
                 setEditModalVisible(false);
                 setManagerToEdit(null);
