@@ -10,8 +10,9 @@ import UserAvatar from '@/components/Avatar/UserAvatar';
 import StatusChip from '@/components/Table/StatusChip';
 import UserFilterPopover, { FilterValues } from '@/components/Users/UserFilterPopover';
 import { useTableUrlSync } from '@/hooks/useTableUrlSync';
-import { useManagers, Manager } from '@/hooks/user-assignments/useUserAssignments';
+import { useManagers, Manager, useUpdateAssignments } from '@/hooks/user-assignments/useUserAssignments';
 import ViewAssignedUsersDialog from '@/components/Users/ViewAssignedUsersDialog';
+import EditUserAssignmentDialog from './EditUserAssignmentDialog';
 
 export default function UserAssignmentTable() {
     const router = useRouter();
@@ -46,9 +47,14 @@ export default function UserAssignmentTable() {
         search: appliedSearch,
     });
 
-    // Modal state for viewing assignments
+    // Modal states
     const [viewDialogOpen, setViewDialogOpen] = useState(false);
     const [selectedManager, setSelectedManager] = useState<Manager | null>(null);
+
+    const [editModalVisible, setEditModalVisible] = useState(false);
+    const [managerToEdit, setManagerToEdit] = useState<Manager | null>(null);
+
+    const updateAssignments = useUpdateAssignments();
 
     const handleRowClick = (record: Manager) => {
         setSelectedManager(record);
@@ -60,6 +66,25 @@ export default function UserAssignmentTable() {
         setSearchValue('');
         setAppliedSearch('');
         setPagination(prev => ({ ...prev, current: 1 }));
+    };
+
+    const handleAssignUser = () => {
+        setManagerToEdit(null);
+        setEditModalVisible(true);
+    };
+
+    const handleEditAssignments = (manager: Manager) => {
+        setManagerToEdit(manager);
+        setEditModalVisible(true);
+    };
+
+    const handleSaveAssignments = (payload: { parent: number; data: { userIds: number[] } }) => {
+        updateAssignments.mutate({ managerId: payload.parent, userIds: payload.data.userIds }, {
+            onSuccess: () => {
+                setEditModalVisible(false);
+                setManagerToEdit(null);
+            }
+        });
     };
 
     const columns: ColumnsType<Manager> = [
@@ -151,7 +176,7 @@ export default function UserAssignmentTable() {
                         ),
                         onClick: ({ domEvent }: any) => {
                             domEvent.stopPropagation();
-                            // Implementation for editing assignments would go here
+                            handleEditAssignments(record);
                         }
                     }
                 ];
@@ -221,6 +246,7 @@ export default function UserAssignmentTable() {
                             type="primary"
                             icon={<UserPlus size={18} />}
                             className="rounded-lg h-10 flex items-center gap-2 border-none font-medium shadow-none"
+                            onClick={handleAssignUser}
                         >
                             Assign User
                         </Button>
@@ -255,6 +281,14 @@ export default function UserAssignmentTable() {
                         setViewDialogOpen(false);
                         setSelectedManager(null);
                     }}
+                />
+
+                <EditUserAssignmentDialog
+                    visible={editModalVisible}
+                    onCancel={() => setEditModalVisible(false)}
+                    onSave={handleSaveAssignments}
+                    manager={managerToEdit}
+                    confirmLoading={updateAssignments.isPending}
                 />
             </div>
         </div>

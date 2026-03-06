@@ -125,6 +125,12 @@ export default function UserFilterPopover({ currentFilters, onApply, onReset }: 
         </div>
     );
 
+    const activeCount = [
+        currentFilters.accountGroup,
+        currentFilters.accountType,
+        currentFilters.status !== null ? true : null
+    ].filter(Boolean).length;
+
     return (
         <Popover
             content={filterContent}
@@ -136,7 +142,12 @@ export default function UserFilterPopover({ currentFilters, onApply, onReset }: 
                 icon={<Filter size={18} />}
                 className="rounded-lg h-10 flex items-center gap-2 border-gray-200 font-medium text-gray-700 hover:text-primary hover:border-primary"
             >
-                Filters
+                <span>Filters</span>
+                {activeCount > 0 && (
+                    <span className="flex items-center justify-center bg-primary text-white text-[10px] font-bold h-5 w-5 rounded-full -mr-1">
+                        {activeCount}
+                    </span>
+                )}
             </Button>
         </Popover>
     );

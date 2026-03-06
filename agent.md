@@ -61,3 +61,4 @@ Always use `UserAvatar` for any user-related profile icon. It automatically hand
 8. **Data**: Always use the organized hooks in `hooks/` (e.g., `hooks/users/`, `hooks/dashboard/`).
 9. **Types/Interfaces**: Refer to `interface/user.ts` for the correct PascalCase backend property names (AccountID, AccountName, etc.).
 10. **Notifications**: When using Ant Design `notification`, always use `title` as the main header and `description` for the body content. Placement must always be set to `topRight`.
+11. **Modals**: Use a regular string for the `title` prop in `Modal` components. Avoid complex custom header structures with icons and subtitles to maintain a clean, standardized layout across the application.

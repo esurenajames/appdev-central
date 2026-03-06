@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '@/lib/api';
 import { Users } from '@/interface/user';
 
@@ -47,5 +47,19 @@ export const useAssignedAccounts = (id: number | null) => {
             return data.data || data;
         },
         enabled: !!id,
+    });
+};
+
+export const useUpdateAssignments = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: async ({ managerId, userIds }: { managerId: number; userIds: number[] }) => {
+            const { data } = await api.post(`/managers/${managerId}/assign`, { userIds });
+            return data;
+        },
+        onSuccess: (_, { managerId }) => {
+            queryClient.invalidateQueries({ queryKey: ['managers'] });
+            queryClient.invalidateQueries({ queryKey: ['assigned-accounts', managerId] });
+        },
     });
 };

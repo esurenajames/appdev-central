@@ -17,19 +17,7 @@ export default function ViewAssignedUsersDialog({ manager, open, onClose }: View
 
     return (
         <Modal
-            title={
-                <div className="flex flex-col gap-4 py-2 mr-6">
-                    <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-primary/5">
-                            <Users size={18} className="text-primary" />
-                        </div>
-                        <div className="flex-1">
-                            <h3 className="text-lg font-bold text-gray-900 leading-tight">Assigned Users</h3>
-                            <p className="text-xs text-gray-500 font-medium italic">Managed by {manager?.AccountName}</p>
-                        </div>
-                    </div>
-                </div>
-            }
+            title={`Users Managed by ${manager?.AccountName}`}
             open={open}
             onCancel={onClose}
             footer={null}
@@ -39,7 +27,6 @@ export default function ViewAssignedUsersDialog({ manager, open, onClose }: View
             styles={{
                 body: {
                     padding: '24px',
-                    backgroundColor: '#f9fafb',
                     maxHeight: '75vh',
                     overflowY: 'auto'
                 }
