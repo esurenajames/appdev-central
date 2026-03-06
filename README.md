@@ -18,7 +18,7 @@
 
 - **Frontend**: [Next.js](https://nextjs.org/) (App Router, TypeScript)
 - **UI Components**: [Ant Design (antd)](https://ant.design/)
-- **Icons**: [Lucide React](https://lucide.dev/)
+- **Icons**: [Lucide React](https://lucide.dev/), [Tech Stack Icons](https://www.tech-stack-icons.com/) (Google, etc.)
 - **State Management**: [TanStack Query (React Query)](https://tanstack.com/query/latest)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 - **Backend**: [Laravel](https://laravel.com/) (API)
@@ -89,4 +89,3 @@ If you encounter an **HTTP 429 Status code**, it means your client (browser) is 
 ## 🛡️ License
 
 © 2026 AppDev Central. All rights reserved.
-Built by [jesurena](mailto:jesurena@ics.com.ph).
