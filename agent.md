@@ -1,64 +1,53 @@
 # Agent Configuration - AppDev Central
 
-## 🎨 Color Theme
-Use these CSS variables or Tailwind classes for all UI elements:
+## � Color Theme
+Use these CSS variables or Tailwind classes for all UI elements to ensure a premium, consistent look:
 
-- **Primary**: `#0F2A44` (`--primary`, `bg-primary`, `text-primary`)
-- **Accent 1**: `#1677ff` (`--accent-1`, `bg-accent-1`, `text-accent-1`)
-- **Accent 2**: `#FF8A3D` (`--accent-2`, `bg-accent-2`, `text-accent-2`)
-- **Neutral**: `#F8FAFC` (`--neutral`, `bg-neutral`, `text-neutral`)
+- **Primary**: `#0F2A44` (Deep Navy - `--primary`, `bg-primary`, `text-primary`)
+- **Accent 1**: `#1677ff` (Electric Blue - `--accent-1`, `bg-accent-1`, `text-accent-1`)
+- **Accent 2**: `#FF8A3D` (Vibrant Orange - `--accent-2`, `bg-accent-2`, `text-accent-2`)
+- **Neutral**: `#F8FAFC` (Ghost White - `--neutral`, `bg-neutral`, `text-neutral`)
 
 ## 📁 Directory Structure Rules
 Maintain the following structure for all new files and refactors:
 
 ```text
 /appdev-central
-├── app/
-│   ├── (auth)/        # login/, register/
-│   ├── (dashboard)/   # analytics/, settings/
-│   ├── api/          # Route handlers
-│   ├── layout.tsx
-│   └── page.tsx
-├── components/
-│   ├── ui/           # Atomic components (Button, Input)
-│   └── shared/       # Global components (Navbar, Footer)
-├── lib/              # SDK/Base configs (Firestore, Auth)
-├── services/         # Logic layer (apiClient, userService)
-├── hooks/            # Custom React hooks
-├── contexts/         # React Contexts (AuthContext)
-├── utils/            # Helpers (formatters, validators)
-├── types/            # TS definitions
-├── styles/           # Global styles
-├── public/           # Static assets
+├── app/               # Next.js 15 App Router (auth, dashboard, api)
+├── components/        # Feature-based components (Avatar, Table, Users, etc.)
+├── lib/               # API configuration (axios, queryClient)
+├── services/          # Pure business logic and API calls
+├── hooks/             # Custom React hooks (TanStack Query)
+├── interface/         # TypeScript definitions (matching backend PascalCase)
+├── utils/             # Helpers (formatters, validators)
+├── public/            # Static assets
+└── styles/            # Global Tailwind/CSS layers
 ```
 
 ## ✨ Common Components
 
 ### 1. StatusChip (Table Status)
 Always use the `StatusChip` component for boolean statuses in tables (Active/Inactive).
-- **Location**: `components/Table/StatusChip.tsx`
+- **Location**: `@/components/Table/StatusChip`
 - **Props**: `status: boolean`
 - **Usage**: `<StatusChip status={record.isActive} />`
 
 ### 2. UserAvatar (Profile Pictures & Initials)
-Always use `UserAvatar` for any user-related profile icon. It automatically handles initials with a deterministic background color if `src` is missing.
-- **Location**: `components/Avatar/UserAvatar.tsx`
-- **Props**:
-    - `src?: string | null`: The image URL.
-    - `domainAccount?: string | null`: Used for generating initials.
-    - `name?: string | null`: Fallback for initials if domainAccount is missing.
-    - `size?: number`: The circle diameter. Initials' font size scales automatically.
-- **Usage**: `<UserAvatar src={user.GAvatar} name={user.AccountName} size={40} />`
+Always use `UserAvatar` for any user-related profile icon. It handles initials with a deterministic background if the image is missing.
+- **Location**: `@/components/Avatar/UserAvatar`
+- **Props**: `src`, `domainAccount`, `name`, `size`
+- **Usage**: `<UserAvatar src={user.GAvatar} domainAccount={user.DomainAccount} size={40} />`
 
 ## 🛠️ Implementation Guidelines
-1. **Styling**: Always use the defined theme colors. Avoid hardcoded hex values in components.
-2. **Components**: Prioritize creating reusable components and using existing ones from `components/`.
-3. **Tables**: Use `StatusChip` for boolean status flags and `UserAvatar` for user entries.
-4. **Logic**: Keep business logic in `services/`, not in the components.
-5. **Naming**: Use PascalCase for components and camelCase for hooks/utils.
-6. **Forms**: Always use `Form` and `Input` from `antd` for forms and handle their validation rules.
-7. **Buttons**: Always use `Button` from `antd` instead of standard HTML `<button>` elements.
-8. **Data**: Always use the organized hooks in `hooks/` (e.g., `hooks/users/`, `hooks/dashboard/`).
-9. **Types/Interfaces**: Refer to `interface/user.ts` for the correct PascalCase backend property names (AccountID, AccountName, etc.).
-10. **Notifications**: When using Ant Design `notification`, always use `title` as the main header and `description` for the body content. Placement must always be set to `topRight`.
-11. **Modals**: Use a regular string for the `title` prop in `Modal` components. Avoid complex custom header structures with icons and subtitles to maintain a clean, standardized layout across the application.
+
+1.  **Styling**: Always use the defined theme colors and Tailwind 4 utility classes. Avoid hardcoded hex values in components.
+2.  **Components**: Prioritize creating reusable components in `components/` and using existing ones.
+3.  **Tables**: Consistently use `StatusChip` for boolean flags and `UserAvatar` for user entries.
+4.  **Logic**: Keep complex business logic and raw API calls in `services/`, not in the components.
+5.  **Naming**: Use `PascalCase` for components and `camelCase` for hooks/utils.
+6.  **Forms**: Exclusively use `Form` and `Input` from `antd` for forms; implement clear validation rules.
+7.  **Buttons**: Always use `Button` from `antd` instead of standard HTML `<button>` elements for consistency.
+8.  **Data**: Always use organized TanStack Query hooks in `hooks/` (e.g., `hooks/users/`).
+9.  **Types/Interfaces**: Refer to `@/interface/` for the correct PascalCase backend property names (e.g., `AccountID`, `AccountName`).
+10. **Notifications**: When using `notification` from `antd`, always provide both `title` and `description`. Placement must be `topRight`.
+11. **Modals**: Keep `Modal` titles as simple strings. Avoid complex custom header structures to maintain a clean layout.
