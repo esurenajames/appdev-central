@@ -1,0 +1,19 @@
+services:
+  nextjs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: appdev-central-app
+    ports:
+      - "3000:3000"
+    environment:
+      # Browser calls (localhost:8000 mapping to appdev-api-nginx in host)
+      - NEXT_PUBLIC_API_URL=http://localhost:8000/api
+      # Internal calls (Next.js to Nginx within the same network)
+      - LARAVEL_API_URL=http://appdev-api-nginx/api
+    networks:
+      - appdev_network
+
+networks:
+  appdev_network:
+    external: true # Joins the network created by the API project
