@@ -1,13 +1,15 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Button, App } from 'antd';
 import { useAuth } from '@/hooks/login/useAuth';
+import { useTheme } from '@/components/Providers/theme-provider';
 
-import dashboardMockup from '../assets/image-removebg-preview.png';
+import lightMockup from '../assets/light-image.png';
+import darkMockup from '../assets/dark-image.png';
 import StackIcon from 'tech-stack-icons';
 
 export default function LoginClient() {
@@ -16,6 +18,12 @@ export default function LoginClient() {
     const router = useRouter();
     const error = searchParams.get('error');
     const { user, isLoading } = useAuth();
+    const { isDark } = useTheme();
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     useEffect(() => {
         if (user && !isLoading) {
@@ -48,14 +56,14 @@ export default function LoginClient() {
     }
 
     return (
-        <div className="flex min-h-screen bg-foreground">
+        <div className="flex min-h-screen bg-background">
             <div className="flex w-full md:w-1/2 lg:w-[45%] flex-col justify-between p-8 sm:p-12 relative z-10">
                 <div>
                     <Link href="/" className="flex items-center gap-2 group w-max">
                         <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform shadow-sm">
                             <span className="text-white font-bold text-xs">AC</span>
                         </div>
-                        <span className="text-xl font-bold text-primary tracking-tight">
+                        <span className="text-xl font-bold text-text tracking-tight">
                             appdev central
                         </span>
                     </Link>
@@ -91,7 +99,7 @@ export default function LoginClient() {
                 </div>
             </div>
 
-            <div className="hidden md:flex w-1/2 lg:w-[55%] bg-accent-1 relative overflow-hidden flex-col justify-center px-12 lg:px-24 text-white">
+            <div className="hidden md:flex w-1/2 lg:w-[55%] bg-gradient-to-br from-primary via-accent-1 to-blue-900 relative overflow-hidden flex-col justify-center px-12 lg:px-24 text-white">
                 <div className="relative z-10 w-full max-w-xl">
                     <h2 className="text-[40px] lg:text-[46px] font-bold mb-6 leading-[1.15] tracking-tight">
                         Manage your team and operations.
@@ -103,12 +111,14 @@ export default function LoginClient() {
 
                 <div className="relative z-10 w-full max-w-2xl">
                     <div className="relative">
-                        <Image
-                            src={dashboardMockup}
-                            alt="Dashboard Preview"
-                            className="w-full h-auto block"
-                            priority
-                        />
+                        {mounted && (
+                            <Image
+                                src={isDark ? darkMockup : lightMockup}
+                                alt="Dashboard Preview"
+                                className="w-full h-auto block"
+                                priority
+                            />
+                        )}
                     </div>
                 </div>
             </div>
