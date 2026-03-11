@@ -1,6 +1,7 @@
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-import QueryProvider from "@/components/providers/QueryProvider";
+import QueryProvider from "@/components/Providers/query-provider";
+import { ThemeProvider } from "@/components/Providers/theme-provider";
 
 export default function RootLayout({
   children,
@@ -8,11 +9,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className="antialiased">
         <QueryProvider>
-          <Navbar />
-          <main>{children}</main>
+          <ThemeProvider>
+            <Navbar />
+            <main>{children}</main>
+          </ThemeProvider>
         </QueryProvider>
       </body>
     </html>

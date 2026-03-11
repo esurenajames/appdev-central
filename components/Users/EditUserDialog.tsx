@@ -89,8 +89,8 @@ export default function EditUserDialog({ visible, onCancel, onSave, user, isEdit
                 }}
             >
                 <div className="mb-5">
-                    <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-1">User and Account Information</h3>
-                    <p className="text-xs text-gray-500">Enter the user and account information here.</p>
+                    <h3 className="text-sm font-bold text-text uppercase tracking-wider mb-1">User and Account Information</h3>
+                    <p className="text-xs text-text-info">Enter the user and account information here.</p>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                     <Form.Item
@@ -166,14 +166,14 @@ export default function EditUserDialog({ visible, onCancel, onSave, user, isEdit
 
                 <div className="">
                     <div className="mb-5">
-                        <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-1">Access Control & Permissions</h3>
-                        <p className="text-xs text-gray-500">Enable system modules and assign specific functional roles for this user.</p>
+                        <h3 className="text-sm font-bold text-text uppercase tracking-wider mb-1">Access Control & Permissions</h3>
+                        <p className="text-xs text-text-info">Enable system modules and assign specific functional roles for this user.</p>
                     </div>
 
                     <div className="">
                         <div className="grid grid-cols-2">
                             <Form.Item
-                                label={<span className="text-gray-700 font-semibold">TCD Access</span>}
+                                label={<span className="text-text-info font-semibold">TCD Access</span>}
                                 name="AllowTCDAccess"
                                 valuePropName="checked"
                                 className="mb-0"
@@ -183,7 +183,7 @@ export default function EditUserDialog({ visible, onCancel, onSave, user, isEdit
 
                             {allowTCD && (
                                 <Form.Item
-                                    label={<span className="text-gray-700 font-semibold">TCD Module Role</span>}
+                                    label={<span className="text-text-info font-semibold">TCD Module Role</span>}
                                     name="TCDRole"
                                     className="mb-0"
                                     rules={[{ required: true, message: 'Required' }]}
@@ -195,7 +195,7 @@ export default function EditUserDialog({ visible, onCancel, onSave, user, isEdit
 
                         <div className="grid grid-cols-2">
                             <Form.Item
-                                label={<span className="text-gray-700 font-semibold">Procurement Access</span>}
+                                label={<span className="text-text-info font-semibold">Procurement Access</span>}
                                 name="AllowProcurementAccess"
                                 valuePropName="checked"
                                 className="mb-0"
@@ -205,7 +205,7 @@ export default function EditUserDialog({ visible, onCancel, onSave, user, isEdit
 
                             {allowProcurement && (
                                 <Form.Item
-                                    label={<span className="text-gray-700 font-semibold">Procurement Module Role</span>}
+                                    label={<span className="text-text-info font-semibold">Procurement Module Role</span>}
                                     name="ProcurementRole"
                                     className="mb-0"
                                     rules={[{ required: true, message: 'Required' }]}

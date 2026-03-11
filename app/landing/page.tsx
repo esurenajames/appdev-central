@@ -4,10 +4,10 @@ import React from 'react';
 
 const LandingPage: React.FC = () => {
     return (
-        <section className="relative h-full md:h-[90vh] md:px-16 bg-white overflow-hidden">
-            <div className="absolute inset-0 z-0 opacity-[0.03]"
+        <section className="relative h-full md:h-[90vh] md:px-16 bg-background overflow-hidden">
+            <div className="absolute inset-0 z-0 opacity-[0.03] dark:opacity-[0.1]"
                 style={{
-                    backgroundImage: `linear-gradient(to right, #000 1px, transparent 1px), linear-gradient(to bottom, #000 1px, transparent 1px)`,
+                    backgroundImage: `linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)`,
                     backgroundSize: '40px 40px'
                 }}
             />
@@ -23,20 +23,20 @@ const LandingPage: React.FC = () => {
                             All your needs in <br />one central app.
                         </h1>
 
-                        <p className="text-lg text-gray-500 leading-relaxed max-w-md">
+                        <p className="text-lg text-text-info leading-relaxed max-w-md">
                             Stop switching between tools. AppDev Central puts user management, modules, and project tracking in one easy-to-use platform.
                         </p>
                     </div>
 
                     <div className="relative">
-                        <div className="bg-white rounded-2xl border border-gray-200 shadow-2xl overflow-hidden w-full h-[500px] max-w-[500px] ml-auto">
-                            <div className="flex items-center gap-2 px-4 py-3 bg-[#F9FAFB] border-b border-gray-200">
+                        <div className="bg-background rounded-2xl border border-border shadow-2xl overflow-hidden w-full h-[500px] max-w-[500px] ml-auto">
+                            <div className="flex items-center gap-2 px-4 py-3 bg-neutral border-b border-border">
                                 <div className="flex gap-1.5">
                                     <div className="w-3 h-3 rounded-full bg-[#FF5F57]" />
                                     <div className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
                                     <div className="w-3 h-3 rounded-full bg-[#28C840]" />
                                 </div>
-                                <span className="ml-4 text-xs font-semibold text-gray-400">User Management</span>
+                                <span className="ml-4 text-xs font-semibold text-text-info">User Management</span>
                             </div>
 
                         </div>

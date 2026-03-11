@@ -19,7 +19,7 @@ export default function DashboardStatsDialog({ visible, onClose, title, items, t
                     <div className={`p-2 rounded-lg ${type === 'group' ? 'bg-purple-50 text-purple-600' : 'bg-green-50 text-green-600'}`}>
                         <UsersRound size={20} />
                     </div>
-                    <span className="text-lg font-bold text-gray-900">{title}</span>
+                    <span className="text-lg font-bold text-text">{title}</span>
                 </div>
             }
             open={visible}
@@ -44,13 +44,13 @@ export default function DashboardStatsDialog({ visible, onClose, title, items, t
                                 key={index}
                                 className="flex items-center justify-between w-full py-3 px-3 hover:bg-gray-50 rounded-xl transition-colors mb-1 border border-transparent hover:border-gray-100"
                             >
-                                <span className="font-semibold text-gray-700 tracking-tight">{item}</span>
+                                <span className="font-semibold text-text-info tracking-tight">{item}</span>
                                 <StatusChip status={true} />
                             </div>
                         ))}
                     </div>
                 ) : (
-                    <div className="py-12 flex flex-col items-center justify-center text-gray-400">
+                    <div className="py-12 flex flex-col items-center justify-center text-text-info">
                         <UsersRound size={40} className="mb-2 opacity-20" />
                         <p className="font-medium">No records found</p>
                     </div>

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { notification } from 'antd';
+import { notification } from '@/components/Providers/theme-provider';
 
 const api = axios.create({
     baseURL: process.env.LARAVEL_API_URL || 'http://localhost:8000/api',

@@ -13,7 +13,7 @@ interface ProfileHeaderProps {
 
 export default function ProfileHeader({ user, isLoading, onEdit }: ProfileHeaderProps) {
     return (
-        <div className="bg-white rounded-3xl border border-gray-100 shadow-md p-8 mb-8 overflow-hidden relative">
+        <div className="bg-background rounded-3xl border border-border shadow-md p-8 mb-8 overflow-hidden relative">
             <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full -mr-32 -mt-32 blur-3xl opacity-60" />
 
             <div className="relative flex flex-col md:flex-row items-center gap-8">
@@ -38,10 +38,10 @@ export default function ProfileHeader({ user, isLoading, onEdit }: ProfileHeader
                         </div>
                     ) : (
                         <>
-                            <h1 className="text-3xl font-bold text-gray-900 mb-1">{user?.AccountName}</h1>
-                            <p className="text-lg text-gray-500 font-medium flex items-center justify-center md:justify-start gap-2 mb-4">
-                                <span className="text-primary">{user?.Nickname || 'No Nickname'}</span>
-                                <span className="text-gray-300">•</span>
+                            <h1 className="text-3xl font-bold text-text mb-1">{user?.AccountName}</h1>
+                            <p className="text-lg text-text-info font-medium flex items-center justify-center md:justify-start gap-2 mb-4">
+                                <span className="text-text-info">{user?.Nickname || 'No Nickname'}</span>
+                                <span className="text-text-info">•</span>
                                 <span>{user?.DomainAccount || 'No Domain Account'}</span>
                             </p>
                             <div className="flex flex-wrap items-center justify-center md:justify-start gap-3">

@@ -40,16 +40,16 @@ export default function UserFilterPopover({ currentFilters, onApply }: UserFilte
     const filterContent = (
         <div className="w-[320px] p-2">
             <div className="flex items-center justify-between mb-4">
-                <span className="font-bold text-gray-900">Filter</span>
+                <span className="font-bold text-text">Filter</span>
             </div>
 
             {/* Account Group */}
             <div className="mb-6">
                 <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-semibold text-gray-700">Account Group</span>
+                    <span className="text-sm font-semibold text-text-info">Account Group</span>
                     <button
                         onClick={() => setFilters({ ...filters, accountGroup: null })}
-                        className="text-primary text-xs font-medium hover:underline"
+                        className="text-text-info text-xs font-medium hover:underline"
                     >
                         Reset
                     </button>
@@ -65,10 +65,10 @@ export default function UserFilterPopover({ currentFilters, onApply }: UserFilte
             {/* Account Type */}
             <div className="mb-6">
                 <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-semibold text-gray-700">Account Type</span>
+                    <span className="text-sm font-semibold text-text-info">Account Type</span>
                     <button
                         onClick={() => setFilters({ ...filters, accountType: null })}
-                        className="text-primary text-xs font-medium hover:underline"
+                        className="text-text-info text-xs font-medium hover:underline"
                     >
                         Reset
                     </button>
@@ -84,10 +84,10 @@ export default function UserFilterPopover({ currentFilters, onApply }: UserFilte
             {/* Status */}
             <div className="mb-8">
                 <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-semibold text-gray-700">Status</span>
+                    <span className="text-sm font-semibold text-text-info">Status</span>
                     <button
                         onClick={() => setFilters({ ...filters, status: null })}
-                        className="text-primary text-xs font-medium hover:underline"
+                        className="text-text-info text-xs font-medium hover:underline"
                     >
                         Reset
                     </button>
@@ -106,7 +106,7 @@ export default function UserFilterPopover({ currentFilters, onApply }: UserFilte
 
             <div className="flex items-center gap-3">
                 <Button
-                    className="flex-1 rounded-lg h-10 border-gray-200 font-bold text-gray-700"
+                    className="flex-1 rounded-lg h-10 border-gray-200 font-bold text-text-info"
                     onClick={handleResetAll}
                 >
                     Reset all
@@ -137,7 +137,7 @@ export default function UserFilterPopover({ currentFilters, onApply }: UserFilte
         >
             <Button
                 icon={<Filter size={18} />}
-                className="rounded-lg h-10 flex items-center gap-2 border-gray-200 font-medium text-gray-700 hover:text-primary hover:border-primary"
+                className="rounded-lg h-10 flex items-center gap-2 border-gray-200 font-medium text-text-info hover:text-primary hover:border-primary"
             >
                 <span>Filters</span>
                 {activeCount > 0 && (

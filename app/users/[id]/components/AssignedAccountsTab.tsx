@@ -30,7 +30,7 @@ export default function AssignedAccountsTab({ user, isLoading }: AssignedAccount
             <div className="pt-6">
                 <Card className="rounded-3xl border-gray-100 border-dashed bg-gray-50/50 py-16 flex flex-col items-center justify-center">
                     <Empty
-                        description={<span className="text-gray-400 font-medium">No users assigned to this person yet.</span>}
+                        description={<span className="text-text-info font-medium">No users assigned to this person yet.</span>}
                     >
                         <Button type="primary" className="rounded-xl font-bold px-6">
                             Assign New User

@@ -75,16 +75,16 @@ export default function ViewUserDialog({ visible, onClose, user, showProfileButt
                     size={84}
                     className="shadow-sm border-2 border-white"
                 />
-                <h2 className="text-xl mt-2 font-bold text-gray-900">{user.AccountName}</h2>
-                <div className="flex flex-col items-center text-gray-500">
+                <h2 className="text-xl mt-2 font-bold text-text">{user.AccountName}</h2>
+                <div className="flex flex-col items-center text-text-info">
                     <div className="flex items-center gap-2 group">
                         <span className="text-sm">{user.Email}</span>
-                        <Tooltip title={copiedField === 'Header Email' ? 'Copied!' : 'Copy Email'}>
+                        <Tooltip title={copiedField === 'Email' ? 'Copied!' : 'Copy Email'}>
                             <button
-                                onClick={() => handleCopy(user.Email, 'Header Email')}
-                                className="p-1 hover:bg-gray-100 rounded-md transition-colors text-gray-400 hover:text-primary"
+                                onClick={() => handleCopy(user.Email, 'Email')}
+                                className="p-1 hover:bg-gray-100 rounded-md transition-colors text-text-info hover:text-primary"
                             >
-                                {copiedField === 'Header Email' ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
+                                {copiedField === 'Email' ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
                             </button>
                         </Tooltip>
                     </div>
@@ -99,11 +99,11 @@ export default function ViewUserDialog({ visible, onClose, user, showProfileButt
             <Descriptions column={1} bordered size="small" styles={{ label: { width: '40%' } }}>
                 <Descriptions.Item label="Account ID">
                     <div className="flex items-center justify-between gap-2">
-                        <span className="font-medium text-gray-900">{user.AccountID}</span>
+                        <span className="font-medium text-text">{user.AccountID}</span>
                         <Tooltip title={copiedField === 'Account ID' ? 'Copied!' : 'Copy ID'}>
                             <button
                                 onClick={() => handleCopy(String(user.AccountID), 'Account ID')}
-                                className="p-1 hover:bg-gray-100 rounded-md transition-colors text-gray-400 hover:text-primary"
+                                className="p-1 hover:bg-gray-100 rounded-md transition-colors text-text-info hover:text-primary"
                             >
                                 {copiedField === 'Account ID' ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
                             </button>
@@ -111,16 +111,16 @@ export default function ViewUserDialog({ visible, onClose, user, showProfileButt
                     </div>
                 </Descriptions.Item>
                 <Descriptions.Item label="Nickname">
-                    <span className="font-medium text-gray-700">{user.Nickname || 'N/A'}</span>
+                    <span className="font-medium text-text-info">{user.Nickname || 'N/A'}</span>
                 </Descriptions.Item>
                 <Descriptions.Item label="Account Group">
-                    <span className="font-medium text-gray-700">{user.AccountGroup}</span>
+                    <span className="font-medium text-text-info">{user.AccountGroup}</span>
                 </Descriptions.Item>
                 <Descriptions.Item label="Account Type">
                     <Tag color="blue" className="rounded-full px-3">{user.AccountType}</Tag>
                 </Descriptions.Item>
                 <Descriptions.Item label="Valid To">
-                    <span className="font-medium text-gray-700">
+                    <span className="font-medium text-text-info">
                         {user.ValidTo || 'N/A'}
                     </span>
                 </Descriptions.Item>

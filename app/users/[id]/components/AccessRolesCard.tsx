@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Card, Divider, Button, Skeleton, Modal } from 'antd';
-import { Shield, CheckCircle, XCircle } from 'lucide-react';
+import { ShieldCheck, CheckCircle, XCircle } from 'lucide-react';
 import { Users } from '@/interface/user';
 import StatusChip from '@/components/Table/StatusChip';
 import { useToggleUserStatus } from '@/hooks/users/useUsers';
@@ -14,12 +14,13 @@ interface AccessRolesCardProps {
 }
 
 export default function AccessRolesCard({ user, isLoading }: AccessRolesCardProps) {
+    const [modal, contextHolder] = Modal.useModal();
     const toggleStatus = useToggleUserStatus();
 
     const handleToggle = () => {
         if (!user) return;
 
-        Modal.confirm({
+        modal.confirm({
             title: user.isActive ? 'Deactivate Account' : 'Activate Account',
             content: `Are you sure you want to ${user.isActive ? 'deactivate' : 'activate'} ${user.AccountName}'s account?`,
             okText: 'Yes, Proceed',
@@ -37,10 +38,11 @@ export default function AccessRolesCard({ user, isLoading }: AccessRolesCardProp
 
     return (
         <div className="flex flex-col gap-6">
-            <Card className="rounded-3xl border-gray-100 shadow-sm overflow-hidden" styles={{ body: { padding: 0 } }}>
-                <div className="bg-gray-50/50 px-6 py-4 border-b border-gray-100 flex items-center gap-2">
-                    <Shield size={18} className="text-gray-400" />
-                    <h3 className="font-bold text-gray-900">Access & Roles</h3>
+            {contextHolder}
+            <Card className="rounded-3xl border-border shadow-sm overflow-hidden" styles={{ body: { padding: 0 } }}>
+                <div className="bg-background px-6 py-4 border-b border-border flex items-center gap-2">
+                    <ShieldCheck size={18} className="text-text-info" />
+                    <h3 className="font-bold text-text">Access & Roles</h3>
                 </div>
                 <div className="p-6 space-y-6">
                     <PermissionItem
@@ -59,16 +61,16 @@ export default function AccessRolesCard({ user, isLoading }: AccessRolesCardProp
                 </div>
             </Card>
 
-            <Card className="rounded-3xl bg-primary/5 border-primary/10 shadow-sm p-6">
-                <h4 className="font-bold text-primary mb-2">Account Status: <span><StatusChip status={user?.isActive || false} /></span></h4>
-                <p className="text-sm text-gray-500 mb-4 leading-relaxed">
+            <Card className="rounded-3xl bg-background border-border shadow-sm p-6">
+                <h4 className="font-bold text-text mb-2">Account Status: <span><StatusChip status={user?.isActive || false} /></span></h4>
+                <p className="text-sm text-text-info mb-4 leading-relaxed">
                     This account is currently {user?.isActive ? 'active' : 'inactive'}.
                     Verified information securely stored in our multi-database system.
                 </p>
                 <Button
                     danger={user?.isActive}
                     type={user?.isActive ? 'default' : 'primary'}
-                    className={`w-full rounded-xl font-bold h-10 border-none shadow-sm ${!user?.isActive ? 'bg-primary' : 'bg-white'}`}
+                    className={`w-full rounded-xl font-bold h-10 border-none shadow-sm ${!user?.isActive ? 'bg-primary' : 'bg-foreground'}`}
                     onClick={handleToggle}
                     loading={toggleStatus.isPending}
                     disabled={isLoading}
@@ -83,15 +85,15 @@ export default function AccessRolesCard({ user, isLoading }: AccessRolesCardProp
 function PermissionItem({ title, hasAccess, role, loading }: { title: string; hasAccess: boolean; role?: any; loading?: boolean }) {
     return (
         <div className="flex items-start gap-4">
-            <div className={`mt-1 p-2 rounded-xl flex-shrink-0 ${hasAccess ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'}`}>
+            <div className={`mt-1 p-2 rounded-xl flex-shrink-0 ${hasAccess ? 'bg-green-50 text-green-600 dark:bg-green-600 dark:text-green-50' : 'bg-red-50 text-red-600 dark:bg-red-600 dark:text-red-50'}`}>
                 {hasAccess ? <CheckCircle size={20} /> : <XCircle size={20} />}
             </div>
             <div className="flex-1 min-w-0">
-                <p className="font-bold text-gray-900 leading-none mb-1">{title}</p>
+                <p className="font-bold text-text leading-none mb-1">{title}</p>
                 {loading ? (
                     <Skeleton.Input active size="small" />
                 ) : (
-                    <p className="text-xs text-gray-500 font-medium truncate">
+                    <p className="text-xs text-text-info font-medium truncate">
                         {hasAccess ? `Assigned Role: ${getRoleLabel(role) || 'Default'}` : 'Access Restricted'}
                     </p>
                 )}

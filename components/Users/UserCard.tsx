@@ -20,7 +20,7 @@ export default function UserCard({ user, onRemove, className = '', isRemovable =
     const avatar = 'GAvatar' in user ? user.GAvatar : null;
 
     return (
-        <div className={`flex items-center justify-between p-3 bg-white border border-gray-100 rounded-xl shadow-sm transition-all hover:border-primary/20 hover:shadow-md ${className}`}>
+        <div className={`flex items-center justify-between p-3 bg-background border border-border rounded-xl shadow-sm transition-all hover:border-primary/20 hover:shadow-md ${className}`}>
             <div className="flex items-center gap-3">
                 <UserAvatar
                     size={40}
@@ -28,15 +28,15 @@ export default function UserCard({ user, onRemove, className = '', isRemovable =
                     name={name}
                 />
                 <div className="flex flex-col">
-                    <span className="text-sm font-bold text-gray-900 leading-tight">{name}</span>
-                    <span className="text-[11px] text-gray-400 font-medium leading-tight mt-0.5">{email}</span>
+                    <span className="text-sm font-bold text-text leading-tight">{name}</span>
+                    <span className="text-[11px] text-text-info font-medium leading-tight mt-0.5">{email}</span>
                 </div>
             </div>
 
             {isRemovable && onRemove && (
                 <button
                     onClick={() => onRemove(userId)}
-                    className="p-1.5 rounded-full hover:bg-red-50 text-gray-300 hover:text-red-500 transition-colors"
+                    className="p-1.5 rounded-full hover:bg-red-50 text-text-info hover:text-red-500 transition-colors"
                     aria-label="Remove user"
                 >
                     <X size={16} />

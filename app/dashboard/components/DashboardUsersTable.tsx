@@ -25,7 +25,7 @@ export default function NewestUsersTable() {
             title: 'Account ID',
             dataIndex: 'AccountID',
             key: 'AccountID',
-            render: (text) => <span className="text-gray-500 font-medium">{text}</span>
+            render: (text) => <span className="text-text-info font-medium">{text}</span>
         },
         {
             title: 'User',
@@ -40,8 +40,8 @@ export default function NewestUsersTable() {
                         className="flex-shrink-0"
                     />
                     <div className="flex flex-col">
-                        <span className="font-semibold text-gray-900 whitespace-nowrap">{text}</span>
-                        <span className="text-xs text-gray-500">{record.Email}</span>
+                        <span className="font-semibold text-foreground whitespace-nowrap">{text}</span>
+                        <span className="text-xs text-text-info">{record.Email}</span>
                     </div>
                 </div>
             )
@@ -50,13 +50,13 @@ export default function NewestUsersTable() {
             title: 'Account Group',
             dataIndex: 'AccountGroup',
             key: 'AccountGroup',
-            render: (text) => <span className="text-gray-600 font-medium">{text}</span>
+            render: (text) => <span className="text-foreground/80 font-medium">{text}</span>
         },
         {
             title: 'Account Type',
             dataIndex: 'AccountType',
             key: 'AccountType',
-            render: (type) => <span className="text-gray-600 font-medium">{type}</span>
+            render: (type) => <span className="text-foreground/80 font-medium">{type}</span>
         },
         {
             title: 'Status',
@@ -67,10 +67,10 @@ export default function NewestUsersTable() {
     ];
 
     return (
-        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden overflow-x-auto">
-            <div className="px-6 py-5 border-b border-gray-100">
-                <h3 className="text-lg font-bold text-gray-900 tracking-tight">Newest Users</h3>
-                <p className="text-sm text-gray-500 mt-1">Overview of the last 10 users joined</p>
+        <div className="bg-background rounded-2xl shadow-xl border border-border overflow-hidden overflow-x-auto">
+            <div className="px-6 py-5 border-b border-border">
+                <h3 className="text-lg font-bold text-foreground tracking-tight">Newest Users</h3>
+                <p className="text-sm text-text-info mt-1">Overview of the last 10 users joined</p>
             </div>
             <Table
                 columns={columns}
@@ -78,7 +78,7 @@ export default function NewestUsersTable() {
                 rowKey="AccountID"
                 pagination={false}
                 className="w-full cursor-pointer"
-                rowClassName="hover:bg-gray-50 transition-colors"
+                rowClassName="hover:bg-neutral transition-colors"
                 onRow={(record) => ({
                     onClick: () => handleViewUser(record),
                 })}

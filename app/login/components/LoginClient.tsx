@@ -4,13 +4,14 @@ import React, { useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { Button, notification } from 'antd';
+import { Button, App } from 'antd';
 import { useAuth } from '@/hooks/login/useAuth';
 
 import dashboardMockup from '../assets/image-removebg-preview.png';
 import StackIcon from 'tech-stack-icons';
 
 export default function LoginClient() {
+    const { notification } = App.useApp();
     const searchParams = useSearchParams();
     const router = useRouter();
     const error = searchParams.get('error');
@@ -41,13 +42,13 @@ export default function LoginClient() {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-50 flex-col gap-4">
                 <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-                <p className="text-gray-500 font-medium">Checking session...</p>
+                <p className="text-text-info font-medium">Checking session...</p>
             </div>
         );
     }
 
     return (
-        <div className="flex min-h-screen bg-white">
+        <div className="flex min-h-screen bg-foreground">
             <div className="flex w-full md:w-1/2 lg:w-[45%] flex-col justify-between p-8 sm:p-12 relative z-10">
                 <div>
                     <Link href="/" className="flex items-center gap-2 group w-max">
@@ -61,8 +62,8 @@ export default function LoginClient() {
                 </div>
 
                 <div className="flex-1 flex flex-col justify-center w-full max-w-[420px] mx-auto text-center">
-                    <h1 className="text-[34px] font-bold text-gray-900 mb-2.5 tracking-tight">Login your account</h1>
-                    <p className="text-gray-500 mb-10 text-[15px]">
+                    <h1 className="text-[34px] font-bold text-text mb-2.5 tracking-tight">Login your account</h1>
+                    <p className="text-text-info mb-10 text-[15px]">
                         Welcome back! Please login with your Google account to access the system.
                     </p>
 
@@ -70,7 +71,7 @@ export default function LoginClient() {
                         <Button
                             onClick={handleGoogleLogin}
                             size="large"
-                            className="flex items-center justify-center w-full gap-3 px-4 py-6 border border-gray-200 rounded-xl hover:bg-gray-50 transition-all font-semibold text-gray-700 hover:border-gray-300 shadow-sm"
+                            className="flex items-center justify-center w-full gap-3 px-4 py-6 border border-gray-200 rounded-xl hover:bg-gray-50 transition-all font-semibold text-text-info hover:border-gray-300 shadow-sm"
                         >
                             <StackIcon name="google" className="w-5 h-5" />
                             Continue with Google
@@ -78,15 +79,15 @@ export default function LoginClient() {
                     </div>
 
                     <div className="mt-8">
-                        <p className="text-sm text-gray-400 font-medium italic">
+                        <p className="text-sm text-text-info font-medium italic">
                             Authorized personnel only
                         </p>
                     </div>
                 </div>
 
-                <div className="flex justify-between items-center text-[13px] text-gray-400 font-medium">
+                <div className="flex justify-between items-center text-[13px] text-text-info font-medium">
                     <span>Copyright © 2025 AppDev Central</span>
-                    <Link href="#" className="hover:text-gray-600 transition-colors">Privacy Policy</Link>
+                    <Link href="#" className="hover:text-text-info transition-colors">Privacy Policy</Link>
                 </div>
             </div>
 

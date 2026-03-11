@@ -48,7 +48,7 @@ export default function DashboardPage() {
             <DashboardBanner />
 
             <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Dashboard Overview</h2>
+                <h2 className="text-2xl font-bold text-foreground tracking-tight">Dashboard Overview</h2>
             </div>
 
             <div className="flex flex-col gap-8">
@@ -57,7 +57,7 @@ export default function DashboardPage() {
                         title="Total Active Users"
                         value={(userCount || 0).toLocaleString()}
                         icon={<Users size={20} />}
-                        iconWrapperClassName="bg-blue-50 text-accent-1"
+                        iconWrapperClassName="bg-blue-500/10 text-blue-500"
                         subtitle="Active users"
                         onClick={() => router.push('/users')}
                     />
@@ -66,7 +66,7 @@ export default function DashboardPage() {
                         title="Total Account Group"
                         value={(totalGroups?.count || 0).toLocaleString()}
                         icon={<UsersRound size={20} />}
-                        iconWrapperClassName="bg-purple-50 text-purple-600"
+                        iconWrapperClassName="bg-purple-500/10 text-purple-600"
                         subtitle="Unique account groups"
                         onClick={handleOpenGroups}
                     />
@@ -75,7 +75,7 @@ export default function DashboardPage() {
                         title="Total Account Type"
                         value={(totalTypes?.count || 0).toLocaleString()}
                         icon={<UsersRound size={20} />}
-                        iconWrapperClassName="bg-green-50 text-green-600"
+                        iconWrapperClassName="bg-green-500/10 text-green-600"
                         subtitle="Unique account types"
                         onClick={handleOpenTypes}
                     />

@@ -129,7 +129,7 @@ export default function EditUserAssignmentDialog({
                 styles={{ body: { padding: '24px 32px 32px 32px' } }}
             >
                 <Form form={form} layout="vertical" className="mt-4">
-                    <div className="mb-6 bg-blue-50/50 p-4 rounded-2xl border border-blue-100/50 flex gap-3">
+                    <div className="mb-6 bg-background p-4 rounded-2xl border border-border flex gap-3">
                         <ShieldCheck size={18} className="text-blue-500 shrink-0 mt-0.5" />
                         <div>
                             <h4 className="text-sm font-bold text-blue-900 mb-0.5">Structure</h4>
@@ -141,7 +141,7 @@ export default function EditUserAssignmentDialog({
 
                     <div className="space-y-6">
                         <Form.Item
-                            label={<span className="text-gray-700 font-bold text-xs uppercase tracking-widest pl-1">Superior (Manager)</span>}
+                            label={<span className="text-text-info font-bold text-xs uppercase tracking-widest pl-1">Superior (Manager)</span>}
                             name="ManagerID"
                             rules={[{ required: true, message: 'Please select a manager' }]}
                         >
@@ -149,13 +149,13 @@ export default function EditUserAssignmentDialog({
                                 {selectedManager ? (
                                     <UserCard
                                         user={selectedManager}
-                                        className="!border-blue-100 bg-blue-50/10"
+                                        className="!border-border bg-background"
                                     />
                                 ) : (
                                     <Button
                                         type="dashed"
                                         block
-                                        className="h-16 rounded-xl border-2 flex items-center justify-center gap-2 text-gray-400 hover:text-primary hover:border-primary transition-all font-medium"
+                                        className="h-16 p-8 rounded-xl border-2 flex items-center justify-center gap-2 text-text-info hover:text-primary hover:border-primary transition-all font-medium"
                                         onClick={() => setManagerModalOpen(true)}
                                     >
                                         <Search size={18} />
@@ -182,7 +182,7 @@ export default function EditUserAssignmentDialog({
                         <Form.Item
                             label={
                                 <div className="flex items-center justify-between w-full pr-1">
-                                    <span className="text-gray-700 font-bold text-xs uppercase tracking-widest pl-1">Assigned Personnel</span>
+                                    <span className="text-text-info font-bold text-xs uppercase tracking-widest pl-1">Assigned Personnel</span>
                                     {selectedPersonnel.length > 0 && (
                                         <span className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full font-bold">
                                             {selectedPersonnel.length} Selected
@@ -197,7 +197,7 @@ export default function EditUserAssignmentDialog({
                                 <Button
                                     type="dashed"
                                     block
-                                    className="h-12 rounded-xl flex items-center justify-center gap-2 text-primary border-primary/30 hover:bg-primary/5 transition-all font-bold disabled:opacity-50 disabled:bg-gray-50 disabled:text-gray-400 disabled:border-gray-200"
+                                    className="h-12 rounded-xl flex items-center justify-center gap-2 text-primary border-primary/30 hover:bg-primary/5 transition-all font-bold disabled:opacity-50 disabled:bg-gray-50 disabled:text-text-info disabled:border-gray-200"
                                     onClick={() => setPersonnelModalOpen(true)}
                                     disabled={!selectedManager}
                                 >

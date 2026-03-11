@@ -84,7 +84,7 @@ export default function UserSelectionModal({
             dataIndex: 'AccountID',
             key: 'AccountID',
             width: 120,
-            render: (text: number) => <span className="text-gray-500 font-medium">{text}</span>
+            render: (text: number) => <span className="text-text-info font-medium">{text}</span>
         },
         {
             title: 'User name',
@@ -98,8 +98,8 @@ export default function UserSelectionModal({
                         size={32}
                     />
                     <div className="flex flex-col">
-                        <span className="font-semibold text-gray-900 leading-none mb-1">{text}</span>
-                        <span className="text-gray-500 text-xs">{record.Email}</span>
+                        <span className="font-semibold text-text leading-none mb-1">{text}</span>
+                        <span className="text-text-info text-xs">{record.Email}</span>
                     </div>
                 </div>
             ),
@@ -108,13 +108,13 @@ export default function UserSelectionModal({
             title: 'Group',
             dataIndex: 'AccountGroup',
             key: 'AccountGroup',
-            render: (text: string) => <span className="text-gray-600 font-medium text-xs">{text}</span>
+            render: (text: string) => <span className="text-text-info font-medium text-xs">{text}</span>
         },
         {
             title: 'Type',
             dataIndex: 'AccountType',
             key: 'AccountType',
-            render: (text: string) => <span className="text-gray-600 font-medium text-xs">{text}</span>
+            render: (text: string) => <span className="text-text-info font-medium text-xs">{text}</span>
         },
         {
             title: 'Status',
@@ -182,7 +182,7 @@ export default function UserSelectionModal({
             <div className="mb-4 flex items-center gap-3 mt-4">
                 <Input
                     placeholder="Search by name, email, or id..."
-                    prefix={<Search size={18} className="text-gray-400" />}
+                    prefix={<Search size={18} className="text-text-info" />}
                     className="flex-1 rounded-lg h-10 border-gray-200"
                     value={searchValue}
                     onChange={(e) => {
@@ -201,7 +201,7 @@ export default function UserSelectionModal({
                 />
                 <Button
                     icon={<RotateCcw size={18} />}
-                    className="rounded-lg h-10 flex items-center gap-2 border-gray-200 font-medium text-gray-500"
+                    className="rounded-lg h-10 flex items-center gap-2 border-gray-200 font-medium text-text-info"
                     onClick={handleReset}
                 >
                     Reset

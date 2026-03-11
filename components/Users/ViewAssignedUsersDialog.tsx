@@ -35,7 +35,7 @@ export default function ViewAssignedUsersDialog({ manager, open, onClose }: View
             {isLoading ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {[1, 2, 3, 4].map((i) => (
-                        <div key={i} className="bg-white p-4 rounded-xl border border-gray-100 flex gap-3 shadow-sm">
+                        <div key={i} className="bg-foreground p-4 rounded-xl border border-gray-100 flex gap-3 shadow-sm">
                             <Skeleton.Avatar active size={52} />
                             <div className="flex-1">
                                 <Skeleton active paragraph={{ rows: 2 }} title={{ width: '60%' }} />
@@ -44,11 +44,11 @@ export default function ViewAssignedUsersDialog({ manager, open, onClose }: View
                     ))}
                 </div>
             ) : accounts.length === 0 ? (
-                <div className="py-16 bg-white rounded-2xl border border-dashed border-gray-200 text-center shadow-sm">
+                <div className="py-16 bg-foreground rounded-2xl border border-dashed border-gray-200 text-center shadow-sm">
                     <Empty
                         image={Empty.PRESENTED_IMAGE_SIMPLE}
                         description={
-                            <span className="text-gray-400 font-medium italic">No users currently assigned to this personnel.</span>
+                            <span className="text-text-info font-medium italic">No users currently assigned to this personnel.</span>
                         }
                     />
                 </div>

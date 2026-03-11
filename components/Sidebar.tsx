@@ -67,20 +67,20 @@ export default function Sidebar() {
     ];
 
     const sidebarContent = (
-        <div className="flex flex-col h-full bg-white">
+        <div className="flex flex-col h-full bg-sidebar border-r border-border">
             {/* Logo */}
             <div className="p-6 flex items-center justify-between">
                 <Link href="" className="flex items-center gap-2 group w-max">
                     <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-sm">
                         <span className="text-white font-bold text-xs">AC</span>
                     </div>
-                    <span className="text-[19px] font-bold text-gray-900 tracking-tight">
+                    <span className="text-[19px] font-bold text-foreground tracking-tight">
                         AppDev Central
                     </span>
                 </Link>
                 <button
                     onClick={() => setIsOpen(false)}
-                    className="lg:hidden text-gray-400 hover:text-gray-600 transition-colors"
+                    className="lg:hidden text-text-info hover:text-foreground transition-colors"
                 >
                     <X size={20} />
                 </button>
@@ -88,7 +88,7 @@ export default function Sidebar() {
             <div className="flex-1 overflow-y-auto px-4 py-2 flex flex-col gap-6">
                 {menuGroups.map((group, index) => (
                     <div key={index}>
-                        <h3 className="text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2 px-3">
+                        <h3 className="text-[11px] font-bold text-text-info uppercase tracking-wider mb-2 px-3">
                             {group.title}
                         </h3>
                         {group.items.length > 0 && (
@@ -104,11 +104,11 @@ export default function Sidebar() {
                                             className={cn(
                                                 "flex items-center gap-3 px-3 py-2.5 rounded-lg text-[14px] font-semibold transition-colors",
                                                 isActive
-                                                    ? "bg-gray-100 text-gray-900"
-                                                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                                                    ? "bg-neutral text-foreground"
+                                                    : "text-text-info hover:bg-neutral/50 hover:text-foreground"
                                             )}
                                         >
-                                            <Icon className={cn("w-[18px] h-[18px]", isActive ? "text-gray-900" : "text-gray-500")} />
+                                            <Icon className={cn("w-[18px] h-[18px]", isActive ? "text-foreground" : "text-text-info")} />
                                             {item.name}
                                         </Link>
                                     );
@@ -121,11 +121,11 @@ export default function Sidebar() {
 
             <div className="p-5">
                 <Dropdown menu={{ items: userMenuItems }} placement="topRight" trigger={['click']}>
-                    <div className="flex items-center justify-between pt-4 border-t border-gray-100 cursor-pointer group">
+                    <div className="flex items-center justify-between pt-4 border-t border-border cursor-pointer group">
                         <div className="flex items-center gap-3 overflow-hidden">
                             {isLoading ? (
-                                <div className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center">
-                                    <Loader2 className="w-4 h-4 text-gray-400 animate-spin" />
+                                <div className="w-9 h-9 rounded-full bg-neutral flex items-center justify-center">
+                                    <Loader2 className="w-4 h-4 text-text-info animate-spin" />
                                 </div>
                             ) : (
                                 <UserAvatar
@@ -137,15 +137,15 @@ export default function Sidebar() {
                                 />
                             )}
                             <div className="flex flex-col text-left overflow-hidden">
-                                <span className="text-[14px] font-semibold text-gray-900 leading-none mb-1 truncate">
+                                <span className="text-[14px] font-semibold text-foreground leading-none mb-1 truncate">
                                     {isLoading ? 'Loading...' : (user?.Nickname || user?.AccountName || 'Guest User')}
                                 </span>
-                                <span className="text-[12px] text-gray-500 truncate">
+                                <span className="text-[12px] text-text-info truncate">
                                     {isLoading ? 'Please wait' : (user?.Email || 'Not logged in')}
                                 </span>
                             </div>
                         </div>
-                        <MoreVertical className="w-5 h-5 text-gray-400 group-hover:text-gray-700 transition-colors flex-shrink-0" />
+                        <MoreVertical className="w-5 h-5 text-text-info group-hover:text-foreground transition-colors flex-shrink-0" />
                     </div>
                 </Dropdown>
             </div>
@@ -154,11 +154,11 @@ export default function Sidebar() {
 
     return (
         <>
-            <header className="lg:hidden sticky top-0 left-0 w-full z-40 bg-white/80 backdrop-blur-md border-b border-gray-200 px-4 h-16 flex items-center justify-between">
+            <header className="lg:hidden sticky top-0 left-0 w-full z-40 bg-background/80 backdrop-blur-md border-b border-border px-4 h-16 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                     <button
                         onClick={() => setIsOpen(true)}
-                        className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                        className="p-2 text-text-info hover:bg-neutral rounded-lg transition-colors"
                     >
                         <Menu size={24} />
                     </button>
@@ -166,7 +166,7 @@ export default function Sidebar() {
                         <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-sm">
                             <span className="text-white font-bold text-xs">AC</span>
                         </div>
-                        <span className="text-lg font-bold text-gray-900 tracking-tight">AppDev Central</span>
+                        <span className="text-lg font-bold text-foreground tracking-tight">AppDev Central</span>
                     </Link>
                 </div>
             </header>
@@ -182,13 +182,13 @@ export default function Sidebar() {
                     className="absolute inset-0 bg-black/20 backdrop-blur-sm"
                     onClick={() => setIsOpen(false)}
                 ></div>
-                <div className="absolute left-0 top-0 h-full w-[280px] bg-white shadow-2xl overflow-hidden">
+                <div className="absolute left-0 top-0 h-full w-[280px] bg-sidebar shadow-2xl overflow-hidden">
                     {sidebarContent}
                 </div>
             </div>
 
 
-            <aside className="hidden lg:flex w-64 flex-col h-screen border-r border-gray-200 sticky top-0 bg-white">
+            <aside className="hidden lg:flex w-64 flex-col h-screen sticky top-0 bg-sidebar">
                 {sidebarContent}
             </aside>
 

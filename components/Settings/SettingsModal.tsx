@@ -1,12 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Modal } from 'antd';
-import {
-    Settings,
-    X,
-    Palette,
-} from 'lucide-react';
+import React, { useEffect } from 'react';
+import { Modal, Select } from 'antd';
+import { useTheme, type Theme } from '@/components/Providers/theme-provider';
+import { Settings, Sun, Moon, Monitor, X } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -19,20 +16,38 @@ interface SettingsModalProps {
     onClose: () => void;
 }
 
-type Category = 'General' | 'Modules';
+const themeOptions = [
+    {
+        value: 'light',
+        label: (
+            <div className="flex items-center gap-2">
+                <Sun size={14} />
+                <span>Light</span>
+            </div>
+        ),
+    },
+    {
+        value: 'dark',
+        label: (
+            <div className="flex items-center gap-2">
+                <Moon size={14} />
+                <span>Dark</span>
+            </div>
+        ),
+    },
+    {
+        value: 'system',
+        label: (
+            <div className="flex items-center gap-2">
+                <Monitor size={14} />
+                <span>System</span>
+            </div>
+        ),
+    },
+];
 
 export default function SettingsModal({ visible, onClose }: SettingsModalProps) {
-    const [activeCategory, setActiveCategory] = useState<Category>('General');
-    const [activeSubItem, setActiveSubItem] = useState('General');
-
-    const sidebarItems = [
-        {
-            id: 'General',
-            icon: Settings,
-            label: 'General',
-        },
-        { id: 'Modules', icon: Palette, label: 'Modules' },
-    ];
+    const { theme, setTheme } = useTheme();
 
     return (
         <Modal
@@ -48,64 +63,56 @@ export default function SettingsModal({ visible, onClose }: SettingsModalProps) 
                 xl: '50%',
                 xxl: '40%',
             }}
+            mask={false}
             centered
-            className="settings-modal"
         >
-            <div className="flex h-[700px] bg-white rounded-2xl overflow-hidden">
-                {/* Sidebar */}
-                <aside className="w-[150px] md:w-[280px] border-r border-gray-100 p-2 flex flex-col justify-start gap-4 overflow-y-auto">
-                    <h2 className="text-2xl font-bold text-gray-900 px-2">Settings</h2>
+            <div className="flex h-[520px] relative">
+                <button
+                    onClick={onClose}
+                    className="absolute top-4 right-4 p-2 rounded-full text-foreground/50 hover:text-foreground hover:bg-foreground/5 transition-all z-10"
+                >
+                    <X size={20} />
+                </button>
+                <div className="w-[220px] bg-neutral border-r border-border flex flex-col shrink-0">
+                    <div className="px-5 pt-6 pb-4">
+                        <h2 className="text-base font-bold text-foreground tracking-tight">Settings</h2>
+                    </div>
 
-                    <nav className="flex flex-col gap-1">
-                        {sidebarItems.map((item) => {
-                            const isExpanded = activeCategory === item.id;
-                            const Icon = item.icon;
-
-                            return (
-                                <div key={item.id} className="flex flex-col">
-                                    <button
-                                        onClick={() => {
-                                            setActiveCategory(item.id as Category);
-                                            setActiveSubItem(item.label);
-                                        }}
-                                        className={cn(
-                                            "flex items-center justify-between px-3 py-2.5 rounded-xl transition-all group w-full text-left",
-                                            isExpanded ? "bg-accent-1/5 text-accent-1" : "text-gray-600 hover:bg-gray-100"
-                                        )}
-                                    >
-                                        <div className="flex items-center gap-3">
-                                            <Icon size={18} className={cn("transition-colors", isExpanded ? "text-accent-1" : "text-gray-400 group-hover:text-gray-600")} />
-                                            <span className="text-[15px] font-semibold">{item.label}</span>
-                                        </div>
-                                    </button>
-                                </div>
-                            );
-                        })}
-                    </nav>
-                </aside>
-
-                {/* Main Content */}
-                <main className="flex-1 flex flex-col min-w-0 bg-white">
-                    <header className="h-16 flex items-center justify-between pl-4 md:px-4 border-b border-gray-50">
-                        <div className="flex flex-col">
-                            <h3 className="text-lg font-bold text-gray-900">{activeSubItem}</h3>
-                        </div>
+                    <nav className="flex flex-col gap-1 px-3 flex-1">
                         <button
-                            onClick={onClose}
-                            className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-all"
+                            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 cursor-pointer bg-accent-1 text-white shadow-sm"
                         >
-                            <X size={20} />
+                            <Settings size={18} />
+                            <span>General</span>
                         </button>
-                    </header>
+                    </nav>
+                </div>
 
-                    <div className="flex-1 overflow-y-auto p-8 custom-scrollbar">
-                        <div className="max-w-2xl mx-auto py-20 text-center">
-                            <Settings size={48} className="mx-auto mb-4 text-gray-200" />
-                            <h4 className="text-xl font-bold text-gray-900 mb-2">{activeCategory} Settings</h4>
-                            <p className="text-gray-500 font-medium">Coming soon...</p>
+                <div className="flex-1 overflow-y-auto p-8">
+                    <div className="flex flex-col gap-6">
+                        <div>
+                            <h3 className="text-lg font-semibold text-foreground">General</h3>
+                            <p className="text-sm text-foreground/50 mt-1">
+                                Manage your general preferences.
+                            </p>
+                        </div>
+
+                        <div>
+                            <label className="text-sm font-medium text-foreground block mb-2">
+                                Theme Appearance
+                            </label>
+                            <Select
+                                value={theme}
+                                onChange={(val) => setTheme(val)}
+                                options={themeOptions}
+                                className="w-full sm:w-64"
+                            />
+                            <p className="text-xs text-foreground/50 mt-2">
+                                Select how you'd like the UI to appear on your screen.
+                            </p>
                         </div>
                     </div>
-                </main>
+                </div>
             </div>
         </Modal>
     );

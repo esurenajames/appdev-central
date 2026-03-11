@@ -93,7 +93,7 @@ export default function UserAssignmentTable() {
             dataIndex: 'AccountID',
             key: 'AccountID',
             sorter: (a: Manager, b: Manager) => a.AccountID - b.AccountID,
-            render: (text: number) => <span className="text-gray-500 font-medium">{text}</span>
+            render: (text: number) => <span className="text-text-info font-medium">{text}</span>
         },
         {
             title: 'User name',
@@ -110,8 +110,8 @@ export default function UserAssignmentTable() {
                         className="flex-shrink-0"
                     />
                     <div className="flex flex-col">
-                        <span className="font-semibold text-gray-900 leading-none mb-1">{text}</span>
-                        <span className="text-gray-500 text-xs">{record.Email}</span>
+                        <span className="font-semibold text-text leading-none mb-1">{text}</span>
+                        <span className="text-text-info text-xs">{record.Email}</span>
                     </div>
                 </div>
             ),
@@ -121,13 +121,13 @@ export default function UserAssignmentTable() {
             dataIndex: 'AccountGroup',
             key: 'AccountGroup',
             sorter: (a: Manager, b: Manager) => a.AccountGroup.localeCompare(b.AccountGroup),
-            render: (text: string) => <span className="text-gray-600 font-medium">{text}</span>
+            render: (text: string) => <span className="text-text-info font-medium">{text}</span>
         },
         {
             title: 'Account Type',
             dataIndex: 'AccountType',
             key: 'AccountType',
-            render: (type: string) => <span className="text-gray-600 font-medium">{type}</span>
+            render: (type: string) => <span className="text-text-info font-medium">{type}</span>
         },
         {
             title: 'Status',
@@ -142,7 +142,7 @@ export default function UserAssignmentTable() {
             align: 'center',
             sorter: (a: Manager, b: Manager) => a.Assigned - b.Assigned,
             render: (count: number) => (
-                <Tag className="rounded-full px-3 bg-gray-100 border-none font-bold text-gray-600 m-0">
+                <Tag className="rounded-full px-3 bg-gray-100 border-none font-bold text-text-info m-0">
                     {count}
                 </Tag>
             )
@@ -156,7 +156,7 @@ export default function UserAssignmentTable() {
                     {
                         key: 'view_profile',
                         label: (
-                            <div className="flex items-center gap-2 text-gray-700 py-1 font-medium">
+                            <div className="flex items-center gap-2 text-text-info py-1 font-medium">
                                 <User size={16} />
                                 <span>View Profile</span>
                             </div>
@@ -169,7 +169,7 @@ export default function UserAssignmentTable() {
                     {
                         key: 'edit',
                         label: (
-                            <div className="flex items-center gap-2 text-primary py-1 font-medium">
+                            <div className="flex items-center gap-2 text-text-info py-1 font-medium">
                                 <Edit3 size={16} />
                                 <span>Edit Assignments</span>
                             </div>
@@ -186,7 +186,7 @@ export default function UserAssignmentTable() {
                         <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight">
                             <Button
                                 type="text"
-                                icon={<MoreHorizontal size={18} className="text-gray-400" />}
+                                icon={<MoreHorizontal size={18} className="text-text-info" />}
                                 className="flex items-center justify-center p-0 w-8 h-8 rounded-full hover:bg-gray-100"
                             />
                         </Dropdown>
@@ -198,10 +198,10 @@ export default function UserAssignmentTable() {
 
     return (
         <div className="relative">
-            <div className="bg-white p-4 pt-2 rounded-2xl border border-gray-100 shadow-xl overflow-x-auto">
-                <div className="p-6 border-b border-gray-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="bg-background p-4 pt-2 rounded-2xl border border-border shadow-xl overflow-x-auto">
+                <div className="p-6 border-b border-border flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="flex items-center gap-2">
-                        <h2 className="text-lg font-bold text-gray-900">All Users with Assignments</h2>
+                        <h2 className="text-lg font-bold text-text">All Users with Assignments</h2>
                         <span className="bg-accent-1 text-white px-2 py-0.5 rounded-full text-xs font-bold">
                             {managersData?.meta?.total || 0}
                         </span>
@@ -210,7 +210,7 @@ export default function UserAssignmentTable() {
                     <div className="flex items-center gap-3">
                         <Input
                             placeholder="Search by name, email, or group..."
-                            prefix={<Search size={18} className="text-gray-400" />}
+                            prefix={<Search size={18} className="text-text-info" />}
                             className="w-full md:w-[320px] rounded-lg h-10 border-gray-200"
                             value={searchValue}
                             onChange={(e) => {
@@ -229,7 +229,7 @@ export default function UserAssignmentTable() {
                         />
                         <Button
                             icon={<RotateCcw size={18} />}
-                            className="rounded-lg h-10 flex items-center gap-2 border-gray-200 font-medium text-gray-500 hover:text-primary hover:border-primary"
+                            className="rounded-lg h-10 flex items-center gap-2 border-gray-200 font-medium text-text-info hover:text-primary hover:border-primary"
                             onClick={handleReset}
                         >
                             Reset

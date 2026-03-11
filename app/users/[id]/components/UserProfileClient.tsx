@@ -35,8 +35,8 @@ export default function UserProfileClient() {
         return (
             <div className="p-8 max-w-5xl mx-auto flex flex-col items-center justify-center min-h-[400px]">
                 <XCircle size={48} className="text-red-500 mb-4" />
-                <h2 className="text-xl font-bold text-gray-900">User Not Found</h2>
-                <p className="text-gray-500">We couldn't retrieve the user details.</p>
+                <h2 className="text-xl font-bold text-text">User Not Found</h2>
+                <p className="text-text-info">We couldn't retrieve the user details.</p>
                 <Button className="mt-4" onClick={() => router.push('/users')}>Back to Users</Button>
             </div>
         );
@@ -48,7 +48,7 @@ export default function UserProfileClient() {
                 type="text"
                 icon={<ChevronLeft size={18} />}
                 onClick={() => router.back()}
-                className="!px-1 mb-6 flex items-center gap-1 text-gray-500 font-medium hover:text-primary transition-colors"
+                className="!px-1 mb-6 flex items-center gap-1 text-text-info font-medium hover:text-primary transition-colors"
             >
                 {from === 'assignments' ? 'Back to User Assignments' :
                     from === 'users' ? 'Back to User Management' :
@@ -96,9 +96,9 @@ export default function UserProfileClient() {
                                 <UsersIcon size={18} />
                                 Assigned Users
                                 {user?.assignedAccounts && (
-                                    <span className="bg-primary/10 text-primary px-2 py-0.5 rounded-full text-[10px] ml-1">
+                                    <Tag className="rounded-full px-3 bg-gray-100 border-none font-bold text-text-info m-0">
                                         {user.assignedAccounts.length}
-                                    </span>
+                                    </Tag>
                                 )}
                             </span>
                         ),

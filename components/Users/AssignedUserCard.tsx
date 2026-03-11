@@ -29,10 +29,10 @@ export default function AssignedUserCard({ user }: AssignedUserCardProps) {
             >
                 <Card
                     onClick={handleCardClick}
-                    className="group relative cursor-pointer overflow-hidden rounded-2xl border-gray-100/80 shadow-sm transition-all duration-300 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/10"
+                    className="group relative cursor-pointer overflow-hidden rounded-2xl border-border bg-background shadow-sm transition-all duration-300 hover:border-accent-1/50 hover:shadow-xl hover:shadow-accent-1/5 hover:bg-accent-1/[0.02] dark:hover:bg-accent-1/[0.05]"
                     styles={{ body: { padding: '16px' } }}
                 >
-                    <div className="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-primary/5 blur-2xl transition-all duration-500 group-hover:bg-primary/15" />
+                    <div className="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-accent-1/5 blur-2xl transition-all duration-500 group-hover:bg-accent-1/15" />
                     <div className={`absolute left-0 top-0 bottom-0 w-1 ${user.isActive ? 'bg-gradient-to-b from-green-400 to-green-600' : 'bg-gradient-to-b from-rose-400 to-rose-600'}`} />
 
                     <div className="flex items-start gap-4">
@@ -41,44 +41,46 @@ export default function AssignedUserCard({ user }: AssignedUserCardProps) {
                                 src={user.GAvatar}
                                 name={user.AccountName}
                                 size={52}
-                                className="ring-2 ring-white ring-offset-2 ring-offset-gray-50/50 shadow-md group-hover:shadow-primary/20 transition-all duration-300"
+                                className="shadow-md"
                             />
                         </div>
 
                         <div className="flex-1 min-w-0">
                             <div className="flex items-start justify-between mb-2">
-                                <h4 className="font-bold text-gray-900 truncate pr-2 group-hover:text-primary transition-colors duration-300">
+                                <h4 className="font-bold text-text truncate pr-2 duration-300">
                                     {user.AccountName}
                                 </h4>
                                 <StatusChip status={user.isActive} />
                             </div>
 
                             <div className="flex flex-wrap items-center gap-1.5 mb-3">
-                                <Tag className="m-0 text-[10px] font-bold border-none bg-slate-100 text-slate-500 rounded-md px-2 py-0.5">
+                                <Tag className="m-0 text-[10px] font-bold border-none bg-neutral text-text-info rounded-md px-2 py-0.5">
                                     ID: {user.AccountIDNo}
                                 </Tag>
                                 <Tag
-                                    className={`m-0 text-[10px] font-bold border-none rounded-md px-2 py-0.5 ${user.Source === 'CustDB' ? 'bg-cyan-50 text-cyan-600' : 'bg-indigo-50 text-indigo-600'
+                                    className={`m-0 text-[10px] font-bold border-none rounded-md px-2 py-0.5 ${user.Source === 'CustDB'
+                                        ? 'bg-cyan-500/10 text-cyan-600 dark:text-cyan-400'
+                                        : 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400'
                                         }`}
                                 >
                                     {user.Source}
                                 </Tag>
-                                <Tag className="m-0 text-[10px] font-bold border-none bg-orange-50 text-orange-600 rounded-md px-2 py-0.5">
+                                <Tag className="m-0 text-[10px] font-bold border-none bg-orange-500/10 text-orange-600 dark:text-orange-400 rounded-md px-2 py-0.5">
                                     {user.AccountType}
                                 </Tag>
-                                <Tag className="m-0 text-[10px] font-bold border-none bg-emerald-50 text-emerald-600 rounded-md px-2 py-0.5">
+                                <Tag className="m-0 text-[10px] font-bold border-none bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded-md px-2 py-0.5">
                                     {user.AccountGroup}
                                 </Tag>
                             </div>
 
                             <div className="space-y-1.5">
-                                <div className="flex items-center gap-2 text-[11px] text-gray-500 bg-gray-50/50 rounded-lg py-1 px-2 border border-gray-100 group-hover:border-primary/10 transition-colors">
-                                    <Mail size={12} className="text-gray-700" />
+                                <div className="flex items-center gap-2 text-[11px] text-text-info bg-neutral/50 rounded-lg py-1 px-2 border border-border group-hover:border-accent-1/10 transition-colors">
+                                    <Mail size={12} className="text-text-info" />
                                     <span className="truncate">{user.Email || 'No email provided'}</span>
                                 </div>
                                 {user.DomainAccount && (
-                                    <div className="flex items-center gap-2 text-[11px] text-gray-500 bg-gray-50/50 rounded-lg py-1 px-2 border border-gray-100 group-hover:border-primary/10 transition-colors">
-                                        <UserCircle size={12} className="text-gray-700" />
+                                    <div className="flex items-center gap-2 text-[11px] text-text-info bg-neutral/50 rounded-lg py-1 px-2 border border-border group-hover:border-accent-1/10 transition-colors">
+                                        <UserCircle size={12} className="text-text-info" />
                                         <span className="truncate font-medium">{user.DomainAccount}</span>
                                     </div>
                                 )}
